@@ -1,0 +1,57 @@
+@use '../../../../css/sign-in-sign-up';
+
+.sign-in-sign-up {
+    .form-div {
+        form {
+            h1 {
+                margin: 0 0 45% 0;
+            }
+        }
+    }
+}
+// @use '../../../css/variables' as vars;
+// @use '../../../css/fonts';
+// @use '../../../css/mixins';
+
+// .sign-up {
+//     width: 100%;
+//     min-height: 100vh;
+//     display: grid;
+//     grid-template-rows: 12fr 1fr;
+    
+//     .form-div {
+//         grid-row: 1 / 2;
+//         @include mixins.flexCenter();
+
+//         form {
+//             width: 80%;
+//             max-width: vars.$formMaxWidth;
+//             @include mixins.flexCenterColumnDirection();
+
+//             h1 {
+//                 text-align: center;
+//                 margin: 0 0 45% 0;
+//                 position: sticky;
+//                 top: 30px;
+//             }
+//             .input {
+//                 width: 100%;
+//                 margin: 0 0 2rem 0;
+//             }
+//             button {
+//                 width: 100%;
+//                 margin: 2rem 0 0 0;
+//             }
+//         }
+//     }
+//     .check-account-status-div {
+//         grid-row: 2 / 3;
+//         max-height: 20px;
+//         text-align: center;
+
+//         p {
+//             display: inline-block;
+//             margin-right: 1rem;
+//         }
+//     }
+// }

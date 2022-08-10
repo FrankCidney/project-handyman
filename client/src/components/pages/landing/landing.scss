@@ -1,0 +1,28 @@
+.grid {
+    height: 100vh;
+}
+.logo-div {
+    position: fixed;
+    top: 0%;
+    z-index: 1; 
+}
+.landing-logo {
+    background: #FAFAFA;
+    width: 100vh;
+}
+
+@media(max-width: 900px) {
+    .grid-small {
+        height: auto;
+    }
+}
+
+@media(max-width: 900px) {
+    .display-none {
+        display: none;
+    }
+}
+// .cont-background {
+//     background: url("../../../assets/julie.jpg") no-repeat fixed center;
+//     background-size: auto;
+// }

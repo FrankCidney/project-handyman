@@ -1,0 +1,31 @@
+@use '../../../home/handyman/client-requests/client-request/request.scss';
+@use '../../../../css/variables' as vars;
+
+.active-serv-wrapper {
+    background: #FAFAFA;
+}
+.active-serv-content {
+    padding-top: 2px;
+    margin-bottom: 17px;
+}
+.active-serv-cont {
+    padding-top: 2px;
+    margin-bottom: 2px;
+}
+.active-serv-container {
+    margin-top: 0;
+
+}
+// div.active-serv-wrapper {
+//     margin: 10px 5px;
+// }
+p.p-serv {
+    padding-right: 3px;
+    // padding-bottom: 3px;
+}
+// .p-top {
+//     padding-bottom: 0px;
+// }
+div.serv-actions {
+    margin-top: vars.$margin3;
+}

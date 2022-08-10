@@ -1,0 +1,123 @@
+@use './css/fonts';
+@use './css/variables' as vars;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    // font-family: Helvetica, Arial, sans-serif;
+}
+body {
+    background: #FAFAFA;
+}
+.logo {
+    font-size: 1.3rem;
+    font-weight: bold;
+    padding: 0.5rem 0;
+    letter-spacing: 0.00938rem;
+    // background-image: linear-gradient(45deg, vars.$colorButton1, vars.$colorButton2);
+    // background-clip: text;
+    // color: transparent;
+}
+.button {
+    padding: 15px 0;
+    font-size: 0.875rem;
+    width: 100%;
+    max-width: 450px;
+    position: relative;
+    transition: all 0s;
+    background: rgb(33, 104, 104);
+    // border-radius: 10px;
+    // border: none;
+    // outline: none;
+    
+    background: linear-gradient(#FAFAFA, #FAFAFA) padding-box,
+    linear-gradient(45deg, vars.$colorButton1, vars.$colorButton2) border-box;
+    border: 1.8px solid transparent;
+    border-radius: 50px;
+
+    &:hover {
+        background: linear-gradient(45deg, vars.$colorButton1, vars.$colorButton2) border-box;
+        box-shadow: 0 0 8px #888888;
+        &::after {
+            width: 100%;
+        }
+    }
+    &:active {
+        background: linear-gradient(#FAFAFA, #FAFAFA) padding-box,
+        linear-gradient(45deg, vars.$colorButton1, vars.$colorButton2) border-box;
+    }
+}
+.button2 {
+    padding: 8px 10px;
+    // background: linear-gradient(#FAFAFA, #FAFAFA) padding-box,
+    //     linear-gradient(45deg, slateblue, coral) border-box;
+    font-size: 0.875rem;
+
+    background: linear-gradient(#FAFAFA, #FAFAFA) padding-box,
+    linear-gradient(45deg, vars.$colorButton1, vars.$colorButton2) border-box;
+    border: 1.8px solid transparent;
+    border-radius: 50px;
+
+    &:hover {
+        background: linear-gradient(45deg, vars.$colorButton1, vars.$colorButton2) border-box;
+        box-shadow: 0 2px 8px #888888;
+        &::after {
+            width: 100%;
+        }
+    }
+    &:active {
+        background: linear-gradient(#FAFAFA, #FAFAFA) padding-box,
+        linear-gradient(45deg, vars.$colorButton1, vars.$colorButton2) border-box;
+    }
+}
+.input {
+    width: 100%;
+    margin: 0 0 2rem 0;
+}
+.avatar {
+    // vertical-align: middle;
+    height: 25px;
+    width: 25px;
+}
+.top-content {
+    padding: 0 15px 15px 15px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    max-width: 1200px;
+    margin: auto;
+    // box-shadow: 0 2px 8px #888888;
+    // margin: 0 0 8px 0;
+    // background-color: white;
+}
+// .nav {
+//     max-width: 1200px;
+// }
+.container {
+    padding: 0 15px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+// @media(max-width: 900px) {
+//     .top-content {
+        
+//     }
+// }
+
+// "start": "react-scripts start",
+
+
+
+
+
+
+//trial styles
+// .max-div {
+//     width: 100%;
+// }
+// .position-relative {
+//     position: relative;
+//     height: inherit;
+// }

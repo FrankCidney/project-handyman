@@ -1,0 +1,19 @@
+@use '../../../../../css/variables' as vars;
+@use '../../../../../css/mixins';
+
+div.tab-content {
+    padding: vars.$margin3;
+    form {
+        @include mixins.flexCenterColumnDirection();
+        width: 100%;
+        .input-custom {
+            margin-bottom: 5px;
+            height: 2.8rem;
+            width: 100%;
+        }
+        button {
+            margin-top: vars.$margin1;
+            width: 100%;
+        }
+    }
+}

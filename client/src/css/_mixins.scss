@@ -1,0 +1,38 @@
+@mixin flexCenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin flexCenterColumnDirection {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin flexSpaceBetween {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@mixin flexEnd {
+    display: flex;
+    justify-content: flex-end;
+}
+
+@mixin boxShadowRound {
+    box-shadow: 0 0 8px #888888;
+}
+
+@mixin invalidInput {
+    text-align: start;
+    opacity: 1;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+@mixin invalid {
+    margin-bottom: 5px;
+}

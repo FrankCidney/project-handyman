@@ -1,0 +1,35 @@
+@use '../../../css/mixins';
+@use '../../../css/fonts';
+// @use '../../../css/variables' as vars;
+
+.dialog {
+    .dialog-title {
+        @include mixins.flexSpaceBetween();
+        h2 {
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+        i {
+            text-align: center;
+            padding: 30px auto 1px auto;
+        }
+    }
+
+    .dialog-content {
+        >.button2 {
+            width: 100%;
+            margin: 10px 0;
+        }
+        .modal-actions {
+            @include mixins.flexEnd();
+            .not-now {
+                margin-right: 2%;
+            }
+            .btn-action {
+                width: 49%;
+                background-color: transparent;
+                border: 1px solid grey;
+            }
+        }
+    }
+}

@@ -1,0 +1,63 @@
+@use '../../../../css/variables' as vars;
+
+// div.wrapper-search {
+//     max-width: vars.$pageMaxWidth300;
+//     padding: 0;
+//     margin: auto;
+// }
+div.container-search {
+    max-width: vars.$formMaxWidth;
+    padding: 0 15px;
+    margin: auto;
+}
+.input fieldset {
+    border-radius: 50px;
+    padding: 0;
+    margin: 0;
+    // .search-input fieldset {
+    //     margin-top: 2rem;
+    // }
+}
+.input {
+    margin-top: 20px;
+    padding: 0;
+    max-width: vars.$formMaxWidth;
+    
+}
+.filters {
+    display: inline-block;
+    margin: 0 5px 10px 0;
+}
+.select {
+    margin: 0 0 0 10px;
+    width: 100px;
+    text-align: center;
+    padding: 5px 5px;
+    background-color: gray;
+}
+.main-title {
+    margin: 0 0 5px 0;
+}
+select.search-by {
+    margin-left: 15px;
+    width: 150px;
+    text-align: left;
+}
+form.search-by {
+    margin-left: 10px;
+}
+.mt-large {
+    display: none;
+}
+
+@media(min-width: 560px) {
+    .mt-small {
+        display: none;
+    }
+    .mt-large {
+        display: block;
+    }
+    div.semi-top {
+        display: flex;
+    }
+}

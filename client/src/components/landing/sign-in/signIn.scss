@@ -1,0 +1,113 @@
+@use '../../../css/sign-in-sign-up';
+
+// @use '../../css/variables' as vars;
+// @use "../../css/fonts";
+// @use "../../css/mixins";
+
+// .sign-in {
+//     width: 100%;
+//     min-height: 100vh;
+//     display: grid;
+//     grid-template-rows: 12fr 1fr;
+//     // border: 2px solid black;
+//     .form-div {
+//         grid-row: 1 / 2;
+//         @include mixins.flexCenter();
+
+//         form {
+//             width: 80%;
+//             max-width: vars.$formMaxWidth;
+//             @include mixins.flexCenterColumnDirection();
+
+//             h1 {
+//                 text-align: center;
+//                 margin: 0 0 60% 0;
+//                 position: sticky;
+//                 top: 30px;
+//             }
+//             .input {
+//                 width: 100%;
+//                 margin: 0 0 2rem 0;
+//             }
+//             button {
+//                 width: 100%;
+//                 margin: 2rem 0 0 0;
+//             }
+
+//         }
+//     }
+//     .check-account-status-div {
+//         grid-row: 2 / 3;
+//         max-height: 20px;
+//         text-align: center;
+//         p {
+//             display: inline-block;
+//             margin-right: 1rem;
+//         }
+//     }
+// }
+
+// .sign-in {
+//     height: calc(100vh - 7rem);
+//     @include flexCenter();
+    
+//     h1 {
+//         text-align: center;
+//         font-size: 2.125rem;
+//         line-height: 1.334;
+//         // margin: 20% 0;
+//         margin: 20% 0 40% 0;
+//         position: sticky;
+//         top: 50px;
+//     }
+//     .form-div {
+        
+//         // height: 90%;
+//         form {
+//             margin: auto;
+//             width: 100%;
+//             .input {
+//                 width: 100%;
+//                 margin-bottom: 10%;
+//                 padding: 0 5px;
+//                 // margin-bottom: 3rem;
+//             }
+//             button {
+//                 width: 100%;
+//                 margin: 13% 0 0% 0;
+//                 padding: 3% 0;
+//                 margin: 1rem 0 0 0;
+//                 // padding: 0.75rem 0;
+//                 border-radius: 50px;
+//             }
+//     }
+//     .no-account-div {
+//         // position: fixed;
+//         // bottom: 10px;
+//         margin-top: 10%;
+//         padding: 0 auto;
+//         // background-color: blue;
+//         // width: 80%;
+        
+//         p {
+//             display: block;
+//             // margin: 0 1.5rem 0 0;
+//             text-align: center;
+//         }
+//         button {
+//             display: inline-block;
+//         }
+//     }
+        
+//         // input[type="text"] {
+//         //     width: 100%;
+//         //     margin: 5% 0;
+//         //     padding: 5% 0;
+//         //     border: 1px rgb(43, 40, 40) solid;
+//         //     border-top: none;
+//         //     border-left: none;
+//         //     border-right: none;
+//         // }
+        
+//     }
+// }

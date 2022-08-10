@@ -1,0 +1,22 @@
+@use '../../../../../css/mixins';
+@use '../../../../../css/variables' as vars;
+
+p {
+    text-align: center;
+}
+// .stars {
+//     text-align: center;
+// }
+// button.submit-rating {
+//     margin: 0 auto;
+// }
+div.tab-content {
+    @include mixins.flexCenterColumnDirection();
+
+    .stars {
+        width: 80%;
+    }
+    button {
+        margin-top: vars.$margin1;
+    }
+}

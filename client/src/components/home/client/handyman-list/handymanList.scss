@@ -1,0 +1,46 @@
+// @use '../../../css/mixins';
+@use '../../../../css/variables' as vars;
+// @use '../../../css/fonts';
+
+.list-content {
+    display: flex;
+    margin: 20px 0;
+    // max-width: vars.$formMaxWidth;
+    text-decoration: none;
+    color: black;
+
+    div.avatar-div {
+        flex: 1 1 0;
+        max-width: 50px;
+        // text-align: center;
+        margin: auto;
+        .avatar {
+            margin: 0;
+            height: 40px;
+            width: 40px;
+        }
+    }
+    div.name-div {
+        flex: 2 2 0;
+        margin-left: 8px;
+        // padding-bottom: 0;
+        padding-top: 8px;
+        p {
+            margin: 0;
+            text-align: start;
+            padding-left: 3px;
+            // margin-bottom: 3px;
+            // margin-top: 2px;
+        }
+        // >p {
+        //     margin-top: 3px;
+        // }
+        .stars {
+            margin-top: 5px;
+        }
+    }
+    p.distance-p {
+        flex: 1 1 0;
+        text-align: end;
+    }
+}

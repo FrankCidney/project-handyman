@@ -1,0 +1,51 @@
+@use '../../css/mixins';
+@use '../../css/variables' as vars;
+
+div.wrapper {
+    max-width: vars.$pageMaxWidth600;
+    margin: 0 auto;
+    padding: 0 auto;
+}
+
+div.outlet {
+    margin-top: 10px;
+    // background: linear-gradient(45deg, vars.$colorButton1, vars.$colorButton2) border-box;
+}
+
+// .container {
+//     padding: 0 15px;
+//     margin: 0 15px;
+
+// }
+// div.top-content {
+//     position: sticky;
+//     top: 0;
+//     z-index: 1;
+//     background-color: white;
+// }
+div.main-content {
+    
+    @include mixins.flexCenterColumnDirection();
+    // text-align: center;
+    .avatar {
+        height: 70px;
+        width: 70px;
+        margin-top: 27px;
+    }
+    h4 {
+        margin-top: 15px;
+        margin-bottom: vars.$margin2;
+    }
+    h5 {
+        margin-bottom: vars.$margin2;
+    }
+    .p-overide {
+        margin-bottom: vars.$margin1;
+        font-weight: 300;
+    }
+}
+.tabs {
+    margin-bottom: 1rem;
+    // margin-bottom: vars.$marginUnderTab;
+    // box-shadow: 0 2px 8px #888888;
+}

@@ -1,0 +1,70 @@
+@use '../../../../../css/mixins';
+@use '../../../../../css/variables' as vars;
+
+div.request {
+    // border: 2px solid gray;
+    box-shadow: 0 2px 8px #888888;
+    border-radius: 10px;
+    // margin-bottom: vars.$margin3;
+    display: flex;
+    margin: vars.$margin10 0;
+    max-width: vars.$formMaxWidth;
+
+    div.avatar-div {
+        flex: 1 1 0;
+        max-width: 50px;
+        margin: vars.$margin3 auto;
+        padding: 0 10px;
+        .avatar {
+            // margin: 0;
+            height: 45px;
+            width: 45px;
+        }
+    }
+    div.request-content {
+        width: 100%;
+        margin-left: 15px;
+        margin-top: vars.$margin3;
+        p {
+            text-align: start;
+            margin: 0;
+        }
+        p.p-top {
+            margin-bottom: 5px;
+        }
+        div.map-phone {
+            margin-top: vars.$margin10;
+            @include mixins.flexCenter();
+            max-width: 50px;
+            padding: 5px;
+
+            a.map {
+                text-decoration: none;
+                color: black;
+            }
+            .mp-icons {
+                // margin: 0;
+                margin-left: 10px;
+                height: 25px;
+                width: 25px;
+                // padding-left: 20px;
+            }
+            .mp-icons-first {
+                margin-left: 2rem;
+            }
+        }
+        div.actions {
+            margin-bottom: vars.$margin3;
+            
+            >button {
+                margin-right: 5%;
+            }
+            button {
+                width: 40%;
+            }
+        }
+    }
+}
+// .actions {
+//     margin-bottom: 50px;
+// }

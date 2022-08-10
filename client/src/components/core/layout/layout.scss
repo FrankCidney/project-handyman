@@ -1,0 +1,66 @@
+@use '../../../css/mixins';
+@use '../../../css/variables' as vars;
+
+h1.drawer-title {
+    margin: vars.$margin1 0;
+    font-size: 1.4rem;
+    font-weight: 500;
+}
+
+div.active-serv-container {
+    max-width: 320px;
+}
+
+// div.layout {
+//     height: 100vh;
+    // display: flex;
+    // flex-direction: column;
+    // @include mixins.flexCenter();
+    // div.drawer-div {
+        // .drawer {
+        //     width: 500px;
+        // }
+    // }
+    // h1.drawer-title {
+    //     margin: vars.$margin10 0;
+    // }
+        
+    
+   // div.content-holder {
+        // flex: 1;
+        // display: flex;
+        // justify-content: center;
+        // overflow-y: auto;
+
+        // IE and Edge scrollbar
+        // -ms-overflow-style: none;
+
+        // Firefox scrollbar
+        // scrollbar-width: none;
+   // }
+    // chrome scrollbar
+    // div.content-holder::-webkit-scrollbar {
+    //     display: none;
+    // }
+    // div.permanent {
+    //     display: none;
+    // }
+// }
+
+// @media(min-width: 600px) {
+//     div.layout {
+        // display: block;
+        // div.bottom-nav {
+        //     display: none;
+        // }
+        // div.content-holder {
+        //     overflow-y: initial;
+        // }
+        // div.permanent {
+        //     display: block;
+        // }
+        // div.swipeable {
+        //     display: none;
+        // }
+//     }
+// }
