@@ -2,6 +2,7 @@ import Avatar from '@mui/material/Avatar';
 import { Link } from 'react-router-dom';
 import './handymanList.scss';
 import Rating from '@mui/material/Rating';
+import { randomColor } from '../../../../helpers';
 
 const HandymanList = ({ handymen, userCoords }) => {
     
@@ -10,7 +11,11 @@ const HandymanList = ({ handymen, userCoords }) => {
             <div key={handyman._id}>
                 <Link to={`/profile/handyman-client-view/${handyman._id}?userLng=${userCoords.lng}&userLat=${userCoords.lat}`} className='list-content'>
                     <div className="avatar-div">
-                        <Avatar className='avatar' />
+                        <Avatar className='avatar' 
+                            sx={{backgroundColor: randomColor()}}
+                        >
+                            {handyman.username[0].toUpperCase()}
+                        </Avatar>
                     </div>
                     <div className='name-div'>
                         <p className='p1'>{handyman.username}</p>

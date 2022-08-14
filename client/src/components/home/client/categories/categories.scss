@@ -1,13 +1,17 @@
-.category-input {
+.alt-input {
     border-radius: 50px;
     margin: 10px 0 0 0;
+    // background-color: #FAFAFA;
+    // &:focus {
+    //     background-color: #ffffff;
+    // }
 
 }
 div.top-content {
     position: sticky;
     top: 0;
     z-index: 1;
-    background: #FAFAFA;
+    // background: #FAFAFA;
 }
 // div.lower-content {
 //     padding-top: 130px;

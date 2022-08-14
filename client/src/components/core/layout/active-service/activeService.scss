@@ -1,12 +1,10 @@
 @use '../../../home/handyman/client-requests/client-request/request.scss';
 @use '../../../../css/variables' as vars;
 
-.active-serv-wrapper {
-    background: #FAFAFA;
-}
+
 .active-serv-content {
     padding-top: 2px;
-    margin-bottom: 17px;
+    margin-bottom: 2px;
 }
 .active-serv-cont {
     padding-top: 2px;
@@ -28,4 +26,10 @@ p.p-serv {
 // }
 div.serv-actions {
     margin-top: vars.$margin3;
+}
+.active-serv-wrapper {
+    background: vars.$colorFA !important;
+    // &:hover {
+    //     cursor: pointer;
+    // }
 }

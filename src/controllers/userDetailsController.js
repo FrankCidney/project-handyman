@@ -65,7 +65,8 @@ module.exports.details_handyman_get = async (req, res) => {
         const coords = handyman.defaultLocation.coordinates;
         // location.lng = coords[0];
         // location.lat = coords[1];
-        res.status(200).json({ handymanName: handyman.username, coords });
+        // console.log('i am here');
+        res.status(200).json({ handymanName: handyman.username, coords, handymanNo: handyman.phoneNo });
 
     } catch (error) {
         console.log({ errorHandymanDetailsFetch: error });

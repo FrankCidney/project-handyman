@@ -10,6 +10,7 @@ div.tab-content {
     @include mixins.flexCenterColumnDirection();
     @include mixins.boxShadowRound();
     border-radius: 5px;
+    background-color: #FAFAFA !important;
 
     form.req-form {
         textarea {

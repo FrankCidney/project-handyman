@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../../../core/navbar/Navbar";
 import { useRef } from "react";
 
-const ClientRequests = ({ toggleDrawer }) => {
+const ClientRequests = () => {
 
     const navigate = useNavigate();
     // set socket values
@@ -43,8 +43,13 @@ const ClientRequests = ({ toggleDrawer }) => {
 
     // function to delete requests when accepted or declined
     const deleteRequest = (requestId) => {
-        const filteredReqs = requests.filter(request => request.Id !== requestId);
-        setRequests(filteredReqs);
+        const filteredReqs = requests.filter(request => request.requestId !== requestId);
+        console.log('delete here')
+        if (filteredReqs.length === 0) {
+            setNoRequests(true);
+        } else {
+            setRequests(filteredReqs);
+        }
     }
 
     // fetch handyman details on component load
@@ -64,6 +69,10 @@ const ClientRequests = ({ toggleDrawer }) => {
                     setNoRequests(true);
                 } else {
                     requestData?.map(async (request) => {
+                        let location = {lng: 0, lat: 0}
+
+                        location.lng = request.senderLocation.coordinates[0];
+                        location.lat = request.senderLocation.coordinates[1];
                         const clientData = await handleFetch(`user/details/client/${request.senderId}`, { method: 'GET' })
                             if (!requests.some(req => request._id === req.requestId)) {
                                 setRequests(prev => [...prev, {
@@ -71,7 +80,7 @@ const ClientRequests = ({ toggleDrawer }) => {
                                     description: request.description,
                                     requestId: request._id,
                                     senderId: request.senderId,
-                                    senderLocation: request.senderLocation
+                                    senderLocation: location
                                 }].reverse());
                             }
 
@@ -111,7 +120,7 @@ const ClientRequests = ({ toggleDrawer }) => {
     return (  
         <>
             <div className="top-content">
-                <Navbar toggleDrawer={toggleDrawer} />
+                <Navbar />
                 {/* <NavbarHandyman /> */}
                 <h1 className="page-title">
                 Requests

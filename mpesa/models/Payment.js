@@ -10,7 +10,8 @@ const paymentSchema = mongoose.Schema({
         required: [true, 'receiverId  required']
     },
     merchantRequestId: String,
-    checkoutRequestId: String
+    checkoutRequestId: String,
+    amount: Number
 });
 
 const Payment = mongoose.model('payment', paymentSchema);

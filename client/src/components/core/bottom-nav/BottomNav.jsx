@@ -5,6 +5,7 @@ import { useState } from "react";
 import HomeIcon from "@mui/icons-material/Home";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import SearchIcon from "@mui/icons-material/Search";
+import './bottomNav.scss';
 
 const BottomNav = () => {
     const [value, setValue] = useState("home");
@@ -15,17 +16,18 @@ const BottomNav = () => {
     }
 
     return ( 
-        <>
+        <div className='bottom-nav'>
             <BottomNavigation
                 // showLabels
                 value={value}
                 onChange={handleChange}
+                className='bottom-nav'
             >
                 <BottomNavigationAction icon={<HomeIcon />} component={Link} to="/categories" value={"home"} />
                 <BottomNavigationAction icon={<SearchIcon />} component={Link} to="/search" value={"search"} />
                 <BottomNavigationAction icon={<LocationOnIcon />} component={Link} to="/map" value={"map"} />
-            </BottomNavigation>
-        </>
+            </BottomNavigation> 
+        </div>
      );
 }
  

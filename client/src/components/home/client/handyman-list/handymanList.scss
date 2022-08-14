@@ -8,6 +8,13 @@
     // max-width: vars.$formMaxWidth;
     text-decoration: none;
     color: black;
+    padding: 0 15px;
+    &:hover {
+        background-color: vars.$colorHoverLight;
+    }
+    &:active {
+        background-color: vars.$bodyBackground;
+    }
 
     div.avatar-div {
         flex: 1 1 0;

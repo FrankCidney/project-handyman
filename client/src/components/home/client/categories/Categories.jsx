@@ -10,59 +10,15 @@ import { CategoriesContext } from "../../../../context/CategoriesContext";
 // import { io } from "socket.io-client";
 // import { SocketContext } from "../../../../context/SocketContext";
 
-const Categories = ({ toggleDrawer }) => {
+const Categories = () => {
     // context values
     const { userId, authenticated } = useContext(UserContext);
-    console.log({ userId, authenticated });
+    // console.log({ userId, authenticated });
     const categories = useContext(CategoriesContext);
     // const { setSocketValue } = useContext(SocketContext);
 
     // set state
     // const [socket, setSocket] = useState(null);
-    // const categories = [
-    //     {
-    //         id: "1",
-    //         img: "url",
-    //         title: "Electricity",
-    //         description: "Includes blah blah blah"
-    //     },
-    //     {
-    //         id: "2",
-    //         img: "url",
-    //         title: "Plumbing",
-    //         description: "Includes blah blah blah"
-    //     },
-    //     {
-    //         id: "3",
-    //         img: "url",
-    //         title: "Painting",
-    //         description: "Includes blah blah blah"
-    //     },
-    //     {
-    //         id: "4",
-    //         img: "url",
-    //         title: "Tiling",
-    //         description: "Includes blah blah blah"
-    //     },
-    //     {
-    //         id: "5",
-    //         img: "url",
-    //         title: "Drywall installation",
-    //         description: "Includes blah blah blah"
-    //     },
-    //     {
-    //         id: "6",
-    //         img: "url",
-    //         title: "Gutter repair",
-    //         description: "Includes blah blah blah"
-    //     },
-    //     {
-    //         id: "7",
-    //         img: "url",
-    //         title: "Welding",
-    //         description: "Includes blah blah blah"
-    //     }
-    // ]
 
     // socket connection 
     // useEffect(() => {
@@ -78,14 +34,14 @@ const Categories = ({ toggleDrawer }) => {
     return (  
         <>
             <div className="top-content">
-                <Navbar toggleDrawer={toggleDrawer} />
+                <Navbar />
                 <h1 className="page-title">
                 Categories
                 </h1>
                 <TextField placeholder="Search categories"
                     // startAdornment={}
                     variant="outlined"
-                    className="input category-input"
+                    className="input alt-input"
                     size="small"
                 />
             </div>

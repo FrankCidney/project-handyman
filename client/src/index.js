@@ -13,6 +13,7 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import CategoriesContextProvider from './context/CategoriesContext';
+import NavContextProvider from './context/NavContext';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -21,11 +22,13 @@ root.render(
     <BrowserRouter>
       <UserContextProvider>
         <SocketContextProvider>
-          <CategoriesContextProvider>
-            <StyledEngineProvider injectFirst>
-              <App />
-            </StyledEngineProvider>
-          </CategoriesContextProvider>
+          <NavContextProvider>
+            <CategoriesContextProvider>
+              <StyledEngineProvider injectFirst>
+                <App />
+              </StyledEngineProvider>
+            </CategoriesContextProvider>
+          </NavContextProvider>
         </SocketContextProvider>
       </UserContextProvider>
     </BrowserRouter>

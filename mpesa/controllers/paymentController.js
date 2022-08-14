@@ -13,7 +13,7 @@ module.exports.mpesa_express_request = (req, res) => {
     const { handymanId, amount, phoneNo } = req.body;
     // get clientId
     const { id } = req.decodedToken;
-    receiverIdVar = id;
+    // receiverIdVar = id;
 
     // encode password
     const pswrd = shortCode+process.env.MPESA_EXPRESS_PASSKEY+timestamp;
@@ -49,6 +49,7 @@ module.exports.mpesa_express_request = (req, res) => {
         }
     }
 
+    // console.log('here here');
     // make payment request to daraja api
     axios.post(process.env.DARAJA_API_STK_ENDPOINT, body, config)
         .then(({ status, statusText, data }) => {
@@ -62,20 +63,24 @@ module.exports.mpesa_express_request = (req, res) => {
                     clientId: id, 
                     handymanId, 
                     merchantRequestId: data.MerchantRequestID,
-                    checkoutRequestId: data.CheckoutRequestID
+                    checkoutRequestId: data.CheckoutRequestID,
+                    amount
                 });
-                res.status(200).json("request success");
+                res.status(200).json({code: 0, msg: 'request accepted'});
+            }
+            if (status === 400) {
+                res.status(400).json({code: 1, msg: 'error making payment'});
             }
         })
         .catch(error => {
-            console.log(error);
-            res.status(400).json("Error making payment, try again later");
+            console.log({ thisPayError: error.response });
+            res.status(400).json({code: 1, msg: 'error making payment'});
         });
-}
+ }
 
 // lipa na mpesa result after stk push
 module.exports.stk_result = async (req, res) => {
-    console.log('I got here');
+    // console.log('I got here');
     const io = req.io;
     const { ResultCode, ResultDesc, MerchantRequestID } = req.body.Body.stkCallback;
 
@@ -85,8 +90,8 @@ module.exports.stk_result = async (req, res) => {
             const payment = await Payment.find({ merchantRequestID: MerchantRequestID })
             console.log({payment})
             const receiver = getUser(payment.clientId);
-            io.to(receiver?.socketId).emit('paymentResponse', { code: 1032, msg: 'User cancelled the request' });
-            // io.emit('hello');
+            // io.to(receiver?.socketId).emit('paymentResponse', { code: 1032, msg: 'User cancelled the request' });
+            io.emit('paymentResponse', { code: 1032, msg: 'User cancelled the request' });
             console.log({ResultCode, ResultDesc});
 
             // trigger soket emit
@@ -98,25 +103,27 @@ module.exports.stk_result = async (req, res) => {
             const payment = await Payment.find({ merchantRequestID: MerchantRequestID })
             const receiver = getUser(payment.clientId);
             console.log('User cannot be reached');
-            io.to(receiver?.socketId).emit('paymentResponse', { code: 1037, msg: 'User cannot be reached' });
-            // io.emit('paymentResponse', { code: 1037, msg: 'User cannot be reached' });
+            // io.to(receiver?.socketId).emit('paymentResponse', { code: 1037, msg: 'User cannot be reached' });
+            io.emit('paymentResponse', { code: 1037, msg: 'User cannot be reached' });
         }
     } else {
         const payment = await Payment.find({ MerchantRequestID })
         const receiver = getUser(payment.clientId);
-        io.to(receiver?.socketId).emit('paymentResponse', { code: 0, msg: 'Payment was successful' });
+        // io.to(receiver?.socketId).emit('paymentResponse', { code: 0, msg: 'Payment was successful' });
+        io.emit('paymentResponse', { code: 0, msg: 'Payment was successful' });
 
         // trigger socket emit
         // receiverId = receiverIdVar;
         // paymentPayload = 0;
 
-        console.log({ResultDesc});
+        // console.log({ResultDesc});
     }
     console.log({ stkPushResult: req.body.Body.stkCallback})
 }
 
 // b2c request
 module.exports.b2c_request = (req, res) => {
+    console.log('in request');
     // define body
     const body = {
         "InitiatorName": "testapi",
@@ -128,7 +135,7 @@ module.exports.b2c_request = (req, res) => {
         "Remarks": "Test remarks",
         "QueueTimeOutURL": `${process.env.SERVER_URL}/mpesa/b2c/timeout`,
         "ResultURL": `${process.env.SERVER_URL}/mpesa/b2c/result`,
-        "Occassion": "Handyman payment after service",
+        "Occassion": "Deposit to handyman",
     }
     // 254708374149
 
@@ -141,7 +148,7 @@ module.exports.b2c_request = (req, res) => {
         }
     }
 
-    // make payment request to daraja api
+    // make b2c payment request to daraja api
     axios.post(process.env.DARAJA_API_B2C_ENDPOINT, body, config)
         .then(response => console.log({ b2cResponse: response }))
         .catch(error => console.log(error));
@@ -156,3 +163,7 @@ module.exports.b2c_timeout = (req, res) => {
 module.exports.b2c_result = (req, res) => {
     console.log({ b2cResult: req.body.Result.ReferenceData });
 }
+
+
+
+

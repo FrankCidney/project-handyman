@@ -1,4 +1,5 @@
 @use '../../../../../css/mixins';
+@use '../../../../../css/variables' as vars;
 
 div.category {
     height: 200px;
@@ -9,6 +10,7 @@ div.category {
     margin: 15px 0 0 0;
     position: relative;
     @include mixins.boxShadowRound();
+    // z-index: 1;
 
     img {
         width: 100%;
@@ -17,16 +19,20 @@ div.category {
     }
     div {
         position: absolute;
-        top: 0;
+        bottom: 0;
         left: 0;
+        background: vars.$bodyBackground;
+        border-radius: 0 50px 0 10px;
+
         h2 {
             padding: 10px 0 0 10px;
-            color: #FAFAFA;
+            color: black;
         }
         p {
             padding: 0 10px;
-            color: #FAFAFA;
+            color: black;
             margin-top: 0;
+            margin-bottom: 10px;
             
         }
     }

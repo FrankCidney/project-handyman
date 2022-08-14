@@ -8,10 +8,11 @@ import { getLocation, handleFetch } from '../../../../helpers';
 import { useNavigate, useParams } from 'react-router-dom';
 import Navbar from '../../../core/navbar/Navbar';
 
-const Search = ({ toggleDrawer }) => {
+const Search = () => {
 
     let params = useParams();
     const navigate = useNavigate();
+    
     // set state values
     const [searchMethod, setSearchMethod] = useState('Home Location');
     const [coordinates, setCoordinates] = useState(null)
@@ -60,7 +61,7 @@ const Search = ({ toggleDrawer }) => {
     // fetch list of nearby handymen when coordinates are set
     useEffect(() => {
         if (coordinates) {
-            console.log({ coordinates });
+            // console.log({ coordinates });
             handleFetch(`search/${params.categoryId}?lng=${coordinates.lng}&lat=${coordinates.lat}`, {
                 method: 'GET'
             }).then(nearbyHandymen => {
@@ -74,7 +75,7 @@ const Search = ({ toggleDrawer }) => {
                     setLoading(false);
                     setNoneFound(null);
                 }
-            }).catch((error) => console.log(error));
+            }).catch((error) => alert(error));
         }
     }, [coordinates]);
     
@@ -104,7 +105,7 @@ const Search = ({ toggleDrawer }) => {
         <>
             <div className="wrapper-search">
                 <div className="top-content">
-                    <Navbar toggleDrawer={toggleDrawer} />
+                    <Navbar />
                     {/* <Autocomplete
                         disablePortal
                         id='search-bar'
@@ -133,9 +134,9 @@ const Search = ({ toggleDrawer }) => {
                                 onChange={e => setDistanceFilter(e.target.value)}
                             >
                                 <option disabled hidden>Distance</option>
+                                <option value="250">250m radius</option>
+                                <option value="500">500m radius</option>
                                 <option value="1000">1km radius</option>
-                                <option value="2500">2.5km radius</option>
-                                <option value="5000">5km radius</option>
                             </select>
                             <select 
                                 name="rating" 

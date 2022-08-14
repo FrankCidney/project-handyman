@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 // note to check on preventing null array in db
 
 // create token
-const maxAge = 60 * 60
+const maxAge = 60 * 60 * 3
 const createToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET || 'development secret', {
         expiresIn: maxAge

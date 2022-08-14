@@ -1,0 +1,40 @@
+@use '../../../css/mixins';
+@use '../../../css/variables' as vars;
+
+.withdraw-container {
+    
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: vars.$formMaxWidth;
+    
+    .within {
+        @include mixins.boxShadowRound();
+        border-radius: 5px;
+        padding: 5px 15px 35px 15px;
+        margin: 0 15px;
+
+        .withdraw {
+            margin: vars.$margin3 auto;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        
+        form {
+            @include mixins.flexCenterColumnDirection();
+            width: 100%;
+            .input-custom {
+                margin-bottom: 10px;
+                height: 2.8rem;
+                width: 100%;
+            }
+            button {
+                margin-top: vars.$margin1;
+                width: 100%;
+            }
+        }
+    }
+    
+}

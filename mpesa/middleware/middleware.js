@@ -1,12 +1,12 @@
 const axios = require('axios').default;
-// require('dotenv').config();
+require('dotenv').config();
 
 const getAccessToken = (req, res, next) => {
-    let buf = Buffer.from(`${process.env.DARAJA_API_KEY}:${process.env.DARAJA_API_SECRET}`);
-    const auth = buf.toString('base64');
+    // let buf = Buffer.from(`${process.env.DARAJA_API_KEY}:${process.env.DARAJA_API_SECRET}`);
+    // const auth = buf.toString('base64');
     axios.get(process.env.DARAJA_API_AUTH_ENDPOINT, {
         headers: {
-            Authorization: `Basic ${auth}`
+            Authorization: `Basic ${process.env.DARAJA_API_AUTHORIZATION}`
         }
     })
     .then(res => res.data)
@@ -15,7 +15,7 @@ const getAccessToken = (req, res, next) => {
         req.accessToken = data.access_token;
         next();
     })
-    .catch(error => console.log(error));
+    .catch(error => console.log({ accessTokenError: error.response }));
 }
 
 module.exports = { getAccessToken };

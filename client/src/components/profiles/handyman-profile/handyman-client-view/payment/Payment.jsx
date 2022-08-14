@@ -21,15 +21,15 @@ const Payment = () => {
     // useEffect to listen for socket events
     useEffect(() => {
         socket?.on('paymentResponse', data => {
-            console.log({ data });
-            console.log('payment response received');
+            // console.log({ data });
+            // console.log('payment response received');
             if (data?.code === 1032) {
-                console.log('You cancelled the request');
+                alert('User cancelled the request');
             } else if (data?.code === 1037) {
-                console.log('User cannot be reached');
+                alert('The number you entered cannot be reached');
             } else {
-                console.log('payment successful');
                 activateRating();
+                alert('payment successful, you can now rate the handyman');
             }
         })
         // socket?.on('hello', data => {
@@ -50,10 +50,13 @@ const Payment = () => {
         })
             .then(res => {
                 // activate rating on success response
-                if (res.data === "request success") {
+                if (res.code === 0) {
                     console.log('request accepted');
                     // activateRating();
+                } else {
+                    alert('Unable to make payment! Please check the number you entered or try again later.')
                 }
+                
             })
             .catch(error => console.log({ paymentError: error }));
     }
@@ -71,7 +74,7 @@ const Payment = () => {
                         id='amount'
                         size='md'
                         placeholder='Amount to pay'
-                        className='input input-custom'
+                        className='input input-custom alt-input'
                         value={amount}
                         onChange={e => setAmount(e.target.value)}
                 />
@@ -80,7 +83,7 @@ const Payment = () => {
                         id='phoneNo'
                         size='sm'
                         placeholder='Phone no. 2547...'
-                        className='input input-custom'
+                        className='input input-custom' alt-input
                         value={phoneNo}
                         onChange={e => setPhoneNo(e.target.value)}
                 />

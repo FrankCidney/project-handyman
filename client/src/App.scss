@@ -6,9 +6,14 @@
     padding: 0;
     box-sizing: border-box;
     // font-family: Helvetica, Arial, sans-serif;
+    a {
+        text-decoration: none;
+        color: black;
+    }
 }
 body {
-    background: #FAFAFA;
+    background: vars.$bodyBackground;
+    // background: #FAFAFA;
 }
 .logo {
     font-size: 1.3rem;
@@ -26,26 +31,28 @@ body {
     max-width: 450px;
     position: relative;
     transition: all 0s;
-    background: rgb(33, 104, 104);
+    // background: rgb(33, 104, 104);
     // border-radius: 10px;
     // border: none;
     // outline: none;
     
-    background: linear-gradient(#FAFAFA, #FAFAFA) padding-box,
-    linear-gradient(45deg, vars.$colorButton1, vars.$colorButton2) border-box;
+    // background: linear-gradient(45deg, vars.$colorButton1, vars.$colorButton2) padding-box,
+    // linear-gradient(45deg, vars.$colorButton1, vars.$colorButton2) border-box;
+    background: linear-gradient(45deg, vars.$colorButton1, vars.$colorButton2) padding-box;
     border: 1.8px solid transparent;
     border-radius: 50px;
+    // color: vars.$colorFA;
 
     &:hover {
         background: linear-gradient(45deg, vars.$colorButton1, vars.$colorButton2) border-box;
         box-shadow: 0 0 8px #888888;
+        cursor: pointer;
         &::after {
             width: 100%;
         }
     }
     &:active {
-        background: linear-gradient(#FAFAFA, #FAFAFA) padding-box,
-        linear-gradient(45deg, vars.$colorButton1, vars.$colorButton2) border-box;
+        background: linear-gradient(45deg, vars.$colorButton1, vars.$colorButton2) border-box;
     }
 }
 .button2 {
@@ -54,21 +61,21 @@ body {
     //     linear-gradient(45deg, slateblue, coral) border-box;
     font-size: 0.875rem;
 
-    background: linear-gradient(#FAFAFA, #FAFAFA) padding-box,
-    linear-gradient(45deg, vars.$colorButton1, vars.$colorButton2) border-box;
+    background: linear-gradient(45deg, vars.$colorButton1, vars.$colorButton2) padding-box;
     border: 1.8px solid transparent;
     border-radius: 50px;
+    // color: vars.$colorFA;
 
     &:hover {
         background: linear-gradient(45deg, vars.$colorButton1, vars.$colorButton2) border-box;
         box-shadow: 0 2px 8px #888888;
+        cursor: pointer;
         &::after {
             width: 100%;
         }
     }
     &:active {
-        background: linear-gradient(#FAFAFA, #FAFAFA) padding-box,
-        linear-gradient(45deg, vars.$colorButton1, vars.$colorButton2) border-box;
+        background: linear-gradient(45deg, vars.$colorButton1, vars.$colorButton2) border-box;
     }
 }
 .input {
@@ -85,39 +92,31 @@ body {
     position: sticky;
     top: 0;
     z-index: 1;
-    max-width: 1200px;
+    max-width: 1300px;
     margin: auto;
-    // box-shadow: 0 2px 8px #888888;
-    // margin: 0 0 8px 0;
-    // background-color: white;
+
+    background: vars.$bodyBackground;
+    // background: linear-gradient(45deg, vars.$colorButton1, vars.$colorButton2);
+    // box-shadow: 0 7px 12px #888888;
+    // &::before {
+    //     content: '';
+    //     position: absolute;
+    //     background: linear-gradient(45deg, vars.$colorButton1, vars.$colorButton2);
+    //     border-radius: 50%;
+    //     width: 100px;
+    //     height: 100px;
+    //     bottom: -140%;
+    //     right: -50px;
+    //     z-index: -1;
+    // }
 }
 // .nav {
 //     max-width: 1200px;
 // }
 .container {
     padding: 0 15px;
-    max-width: 1200px;
+    max-width: 1300px;
     margin: auto;
+    // border-radius: 15px 15px 15px 0;
+    // max-width: 1200px;
 }
-
-// @media(max-width: 900px) {
-//     .top-content {
-        
-//     }
-// }
-
-// "start": "react-scripts start",
-
-
-
-
-
-
-//trial styles
-// .max-div {
-//     width: 100%;
-// }
-// .position-relative {
-//     position: relative;
-//     height: inherit;
-// }

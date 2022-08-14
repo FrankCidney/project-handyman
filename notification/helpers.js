@@ -29,6 +29,7 @@ module.exports.handleServiceRes = async (senderId, receiverId, requestDesc, requ
     const receiver = this.getUser(receiverId);
     const notification = await Notifications.create({ senderId, receiverId, description: requestDesc, type })
     if (type === 0) {
+        console.log(senderLocation);
         const activeService = await ActiveService.create(
             { 
                 handymanId: senderId,

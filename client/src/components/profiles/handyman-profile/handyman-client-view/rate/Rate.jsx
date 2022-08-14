@@ -20,7 +20,7 @@ const Rate = () => {
             }
         })
             .then(data => deactivateRating())
-            .catch(error => console.log({ ratingError: error }));
+            .catch(error => alert(error));
     }
     return ( 
         <LockRating ratingActive={ratingActive} >
@@ -32,7 +32,7 @@ const Rate = () => {
                     <Rating 
                         name='half-rating'
                         value={ratingVal}
-                        precision={0.5}
+                        precision={1}
                         onChange={(e, newRatingVal) => setRatingVal(newRatingVal)}
                         className="stars"
                         size='large'

@@ -1,6 +1,4 @@
-// import BottomNav from "../bottom-nav/BottomNav";
-// import Navbar from "../navbar/Navbar";
-// import Container from "@mui/material/Container";
+import BottomNav from "../bottom-nav/BottomNav";
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import './layout.scss';
 import { useEffect, useState } from "react";
@@ -11,8 +9,12 @@ import { UserContext } from "../../../context/UserContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { handleFetch } from "../../../helpers";
 import ActiveService from "./active-service/ActiveService";
-import Drawer from '@mui/material/Drawer';
-import { width } from '@mui/system';
+import { NavContext } from "../../../context/NavContext";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+// import Drawer from '@mui/material/Drawer';
+// import { width } from '@mui/system';
+import IconButton from '@mui/material/IconButton';
+// import HomeIcon from "@mui/icons-material/Home";
 
 const Layout = ({ children }) => {
     const navigate = useNavigate();
@@ -21,12 +23,15 @@ const Layout = ({ children }) => {
     // get context values
     const { setSocketValue } = useContext(SocketContext);
     const { userId } = useContext(UserContext);
+    const { drawerVal, toggleFunc, notificationFunc } = useContext(NavContext);
 
     // set state
-    const [open, setOpen] = useState(false);
+    // const [open, setOpen] = useState(false);
     const [socket, setSocket] = useState(null);
     const [noneActive, setNoneActive] = useState(false);
     const [activeServs, setActiveServs] = useState([]);
+    // const [locationState, setLocationState] = useState('');
+    // const [notifications, setNotifications] = useState([]);
 
     // function to fetch active services
     const fetchActiveServices = async () => {
@@ -38,9 +43,37 @@ const Layout = ({ children }) => {
         }
         
     }
+    
+    // get notifications on component load
+    useEffect(() => {
+    if (location.pathname === '/categories') {
+
+            handleFetch('notifications/get-notifications', {
+            method: 'GET'
+            }).then(notifs => notifs.map(notif => {
+            
+            handleFetch(`user/details/handyman/${notif.senderId}`, {
+                method: 'GET'
+                })
+                    .then(handymanData => {
+                        // accepted request notification to client
+                        if (notif.type === 0) {
+                            notificationFunc(`${handymanData.handymanName} accepted your request`)
+                        }
+                        // declined request notification to client
+                        if (notif.type === 1) {
+                            notificationFunc(`${handymanData.handymanName} declined your request`)
+                        }
+                    })
+                    .catch(error => console.log({ handymanDetailsError: error })); 
+                }))
+            .catch(error => console.log({ notificationsFetchError: error }));
+            }
+            
+    }, []);
 
     useEffect(() => {       
-        
+        // fetch active services
         fetchActiveServices()
             .then((activeServices) => {
                 
@@ -57,10 +90,10 @@ const Layout = ({ children }) => {
                                     setActiveServs(prev => [...prev, {
                                         ...clientData, 
                                         description: activeService.description,
-                                        activeServiceId: activeService._id
-                                        // clientId: activeService.clientId
+                                        activeServiceId: activeService._id,
+                                        clientLocation: activeService.clientLocation,
+                                        handymanLocation: activeService.handymanLocation
                                     }]);
-                                    // console.log({activeServs})
                                 })
                             
                         } catch (error) {
@@ -81,8 +114,6 @@ const Layout = ({ children }) => {
                                         activeServiceId: activeService._id,
                                         handymanId: activeService.handymanId
                                     }]);
-                                    // console.log(handymanData)
-                                    // console.log({activeServs})
                                 })
                             
                         } catch (error) {
@@ -93,9 +124,9 @@ const Layout = ({ children }) => {
             });
 
         // setup socket connection
-        setSocket(io('http://localhost:8080'));
+        setSocket(io(`${process.env.REACT_APP_SERVER_URL}`));
         
-    }, [location.pathname]);
+    }, []);
 
     useEffect(() => {
 
@@ -104,42 +135,58 @@ const Layout = ({ children }) => {
         socket?.emit('newUser', userId);
 
         socket?.on('getResponseNotification', data => {
-            // console.log(data);
-            console.log('received accept response')
+
             handleFetch(`user/details/handyman/${data.senderId}`, {
             method: 'GET'
             })
                 .then(handymanData => {
-                    // console.log('after fetch')
-                    setActiveServs(prev => 
-                        [...prev, {
-                        ...handymanData, 
-                        description: data.requestDesc,
-                        activeServiceId: data.activeServiceId
-                        // senderId: data.senderId
-                        }]);
-                    console.log({ activeServs });
-                    setNoneActive(false)
+                    
+                    if (data.type === 0) {
+                        setActiveServs(prev => 
+                            [...prev, {
+                            ...handymanData, 
+                            description: data.requestDesc,
+                            activeServiceId: data.activeServiceId
+                            }]);
+
+                        setNoneActive(false)
+                        console.log('accepted response');
+                        notificationFunc(`${handymanData.handymanName} accepted your request`);
+                    }
+
+                    if (data.type === 1) {
+                        console.log('declined response');
+                        notificationFunc(`${handymanData.handymanName} declined your request`);
+                    }
+
+                    
                 })
                 .catch(error => console.log({ clientDetailsError: error }))
         });
     }, [socket, userId]);
-    // useEffect(() => {
-    //     console.log({effectNonActive: activeServs})
-    // }, [activeServs]);
 
-    const toggleDrawer = (val) => setOpen(val);
+    // function to remove active service when end button is clicked
+    const endActiveService = (serviceId) => {
+        const filteredServs = activeServs.filter(service => service.activeServiceId !== serviceId);
+        if (filteredServs.length === 0) {
+            setNoneActive(true);
+        } else {
+            setActiveServs(filteredServs);
+        }
+    }
 
     // drawer content
     const drawerContent = (
-        <div>
+                    <div>
                         
                         {
                             noneActive? 
                                 <div className="none-active">No active services</div>
                             : activeServs.map(activeServ => (
-                                <div item key={activeServ.activeServeId} >
-                                    <ActiveService activeServ={activeServ} />
+                                <div item key={activeServ.activeServiceId} >
+                                    <ActiveService activeServ={activeServ} 
+                                        endActiveService={endActiveService} 
+                                    />
                                 </div>
                             ))
                         }
@@ -152,19 +199,31 @@ const Layout = ({ children }) => {
             <div className="drawer-div ">
                 <SwipeableDrawer
                     anchor="left"
-                    variant="temporary"
-                    open={open}
-                    onClose={(e) => toggleDrawer(false)}
-                    onOpen={(e) => toggleDrawer(true)}
+                    open={drawerVal}
+                    onClose={(e) => toggleFunc(false)}
+                    onOpen={(e) => toggleFunc(true)}
                     ModalProps={{
                         keepMounted: true
                     }} 
+                    PaperProps={{
+                        sx: {
+                            background: '#FAFAFA'
+                        }
+                    }}
                     className="drawer"              
                 >
                     <div className="container active-serv-container ">
-                        <h1 className="drawer-title p1">
-                            Active Services
-                        </h1>
+                        <div className="drawer-top">
+                            <h1 className="drawer-title p1">
+                                Active Services
+                            </h1>
+                            <IconButton
+                                onClick={(e) => toggleFunc(false)}
+                            >
+                                <ArrowBackIcon className="arrowBackIcon"/>
+                            </IconButton>
+                        </div>
+                        
                         {/* <hr /> */}
                         { drawerContent }
                     </div>
@@ -190,11 +249,12 @@ const Layout = ({ children }) => {
                 {/* <Container> */}
                 {/* <div className="container"> */}
                     {
-                        children(toggleDrawer)
+                        children()
                     }
                 {/* </div> */}
                 {/* </Container> */}
             </div>
+            
             {/* <div className="bottom-nav"><BottomNav /></div> */}
         </div>
      );

@@ -2,6 +2,7 @@ import './signIn.scss';
 import EmailIcon from '@mui/icons-material/Email';
 import HttpsIcon from '@mui/icons-material/Https';
 import Input from '@mui/material/Input';
+// import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useContext, useState } from 'react';
@@ -75,8 +76,12 @@ const SignIn = () => {
         <div className="sign-in-sign-up">
             <div className='form-div'>
                 <form onSubmit={handleSubmit}>
-                    {location.pathname === '/signin/client' && <h1>Client Sign In</h1>}
-                    {location.pathname === '/signin/handyman' && <h1>Handyman Sign In</h1>}
+                    {location.pathname === '/signin/client' && <h1>Sign In <br /> 
+                    <span className='p-custom'>Sign in as client </span>
+                    </h1>}
+                    {location.pathname === '/signin/handyman' && <h1>Sign In <br /> 
+                    <span className='p-custom'>Sign in as handyman </span>
+                    </h1>}
 
                     <Input placeholder='Email' 
                         startAdornment={
@@ -87,7 +92,19 @@ const SignIn = () => {
                         value={userDetails.email}
                         onChange={e => setUserDetails({...userDetails, email: e.target.value})}
                     />
+
+                    {/* <OutlinedInput 
+                        placeholder='Email'
+                        startAdornment={
+                            <InputAdornment position="start">
+                                <EmailIcon fontSize='small'/> 
+                            </InputAdornment>}
+                        className={`input input-custom ${invalid.email}`}
+                        value={userDetails.email}
+                        onChange={e => setUserDetails({...userDetails, email: e.target.value})}
+                    /> */}
                     <p className="error-msg">{errors?.email}</p>
+                    
                     <Input placeholder='Password' 
                         startAdornment={
                             <InputAdornment position='start'>

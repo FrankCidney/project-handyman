@@ -12,39 +12,117 @@ nav {
     //     height: 25px;
     //     width: 25px;
     // }
+
+    .round {
+        &::before {
+            content: '';
+            position: absolute;
+            background: linear-gradient(45deg, vars.$colorButton1, vars.$colorButton2);
+            border-radius: 40px;
+            width: 180px;
+            height: 100px;
+            top: -50px;
+            left: -50px;
+            z-index: -1;
+        }
+        
+    }
     h2 {
         line-height: 35px;
     }
     .menu-icon {
         padding-top: 4px;
+        &:hover {
+            cursor: pointer;
+        }
     }
     .notif-icon {
         padding-top: 4px;
+        position: relative;
+        &:hover {
+            cursor: pointer;
+        }
+       
+        // &::after {
+        //     content: '';
+        //     position: absolute;
+        //     width: 10px;
+        //     height: 10px;
+        //     border-radius: 50%;
+        //     background: linear-gradient(45deg, vars.$colorButton1, vars.$colorButton2);
+        //     top: 8px;
+        //     right: 2px;
+        // }
         // .notif {
             // background-image: linear-gradient(45deg, vars.$colorButton1, vars.$colorButton2);
             // background-clip: text;
             // color: transparent;
         // }
+        .notif-active {
+            // content: '';
+                position: absolute;
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background: linear-gradient(45deg, vars.$colorButton1, vars.$colorButton2);
+                top: 8px;
+                right: 2px;
+                color: transparent;
+        }
     }
+    .avatar-icon {
+        &:hover {
+            cursor: pointer;
+        }
+    }
+    
     div.icons {
         @include mixins.flexCenter();
         .icon-divs {
             margin-left: 10px;
         }
     }
-    div.profile-content {
+    div.options-content {
         @include mixins.flexCenterColumnDirection();
         position: absolute;
         top: 40px;
-        background-color: white;
-        padding: 5px 10px;
+        right: 0;
+        background-color: vars.$colorFA;
+        padding: 5px 0;
         box-shadow: 2px 3px 8px #888888;
         z-index: 2;
+        width: 90px;
+        border-radius: 10px;
+
         button {
             border: none;
             outline: none;
             background: transparent;
-            margin: 5px 0;
+            padding: 5px 10px;
+            width: 100%;
+            border-radius: 2px;
+            &:hover {
+                background-color: vars.$colorHoverLight;
+                cursor: pointer;
+            }
+            &:active {
+                background-color: vars.$colorFA;
+            }
+        }
+    }
+    div.notifs-content {
+        @include mixins.flexCenterColumnDirection();
+        position: absolute;
+        top: 40px;
+        right: 0;
+        background-color: vars.$colorFA;
+        padding: 5px 10px;
+        box-shadow: 2px 3px 8px #888888;
+        z-index: 2;
+        border-radius: 10px;
+        
+        p.notifs {
+            margin: 10px 0;
         }
     }
 }

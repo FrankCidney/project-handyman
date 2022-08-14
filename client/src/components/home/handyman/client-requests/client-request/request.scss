@@ -9,6 +9,7 @@ div.request {
     display: flex;
     margin: vars.$margin10 0;
     max-width: vars.$formMaxWidth;
+    background: vars.$bodyBackground;
 
     div.avatar-div {
         flex: 1 1 0;
@@ -38,6 +39,10 @@ div.request {
             max-width: 50px;
             padding: 5px;
 
+            a.phone {
+                text-decoration: none;
+                color: black;
+            }
             a.map {
                 text-decoration: none;
                 color: black;

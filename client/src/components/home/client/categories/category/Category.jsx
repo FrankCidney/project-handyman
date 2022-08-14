@@ -17,7 +17,7 @@ const Category = ({ category }) => {
         <div className="category">
             <Link to={`/search/${category.id}`}>
                 <img src={images[category.label]} alt={category.label} />
-                <div>
+                <div className='cat-content'>
                     <h2 className="category-title">
                         { category.label }
                     </h2>

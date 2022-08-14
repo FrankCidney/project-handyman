@@ -12,6 +12,19 @@
         grid-row: 1 / 2;
         @include mixins.flexCenter();
 
+        &::before {
+            content: '';
+            position: absolute;
+            width: 2000px;
+            height: 220%;
+            border-radius: 50%;
+            background: linear-gradient(45deg, vars.$colorButton1, vars.$colorButton2);
+            top: -10%;
+            right: 50%;
+            transform: translateY(-50%);
+            z-index: -1;
+        }
+
         form {
             width: 80%;
             max-width: vars.$formMaxWidth;
@@ -19,7 +32,13 @@
 
             h1 {
                 text-align: center;
-                margin: 60px 0 60% 0;
+                margin: 60px 0 60px 0;
+                letter-spacing: 1px;
+                .p-custom {
+                    font-size: 1.1rem;
+                    letter-spacing: normal;
+                    font-weight: 300;
+                }
                 // position: sticky;
                 // top: 30px;
             }
@@ -79,4 +98,24 @@
             color: black;
         }
     }
+}
+
+@media(max-width: 900px) {
+    .sign-in-sign-up {
+        .form-div {
+            &::before {
+                position: absolute;
+                width: 1000px;
+                height: 100vh;
+                border-radius: 50%;
+                background: linear-gradient(45deg, vars.$colorButton1, vars.$colorButton2);
+                bottom: 60%;
+                left: -70%;
+                right: initial;
+                top: initial;
+                transform: translateX(-50%);
+                z-index: -1;
+            }
+    }   
+}
 }

@@ -23,13 +23,13 @@ const Request = ({ request, coordinates, deleteRequest }) => {
             senderId: userId,
             receiverId: request.senderId,
             requestDesc: request.description,
-            requestId: request.Id,
+            requestId: request.requestId,
             type: 0,
             receiverLocation: { coordinates: [request.senderLocation.lng, request.senderLocation.lat] },
-            senderLocation: coordinates
+            senderLocation: { coordinates }
         });
         console.log('accept event emitted');
-        deleteRequest(request.Id);
+        deleteRequest(request.requestId);
     }
     // on request decline
     const decline = () => {
@@ -62,11 +62,12 @@ const Request = ({ request, coordinates, deleteRequest }) => {
                 <p className='p-base p-top'>{request.clientName}, {request.clientPhone}</p>
                 <p className='p2'>{request.description}</p>
                 <div className="map-phone">
-                    <div className="phone"
+                    <a href={`tel:${request.clientPhone}`}
+                        className="phone"
                         onClick={handleCall}
                     >
                         <LocalPhoneIcon className='mp-icons mp-icons-first'/>
-                    </div>
+                    </a>
                     <a href={`https://www.google.com/maps/dir/?api=1&origin=${coordinates[1]}%2C${coordinates[0]}&destination=${request.senderLocation?.lat}%2C${request.senderLocation?.lng}`} 
                     className="map">
                         <MapIcon className='mp-icons'/>

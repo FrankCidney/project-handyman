@@ -25,7 +25,8 @@ const activeServiceSchema = mongoose.Schema({
         required: [true, 'clientId  required']
     },
     description: String,
-    clientLocation: geoSchema
+    clientLocation: geoSchema,
+    handymanLocation: geoSchema
 });
 
 const ActiveService = mongoose.model('active-service', activeServiceSchema);

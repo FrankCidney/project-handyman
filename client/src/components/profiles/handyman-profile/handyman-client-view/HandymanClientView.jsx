@@ -3,12 +3,13 @@ import Avatar from "@mui/material/Avatar";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import { Link, Outlet, useParams, useSearchParams } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import '../../profiles.scss';
 // import Layout from "../../../core/layout/Layout";
 import { UserContext } from '../../../../context/UserContext';
+import { handleFetch, randomColor } from "../../../../helpers";
 
-const HandymanClientView = ({ toggleDrawer }) => {
+const HandymanClientView = () => {
 
     let params = useParams();
     const [searchParams] = useSearchParams();
@@ -26,6 +27,10 @@ const HandymanClientView = ({ toggleDrawer }) => {
 
     const [value, setValue] = useState(0);
     const [ratingActive, setRatingActive] = useState(false);
+    const [handymanDetails, setHandymanDetails] = useState({
+        handymanName: '',
+        handymanNo: ''
+    });
 
     // function to activate rating
     const activateRating = () => {
@@ -43,17 +48,32 @@ const HandymanClientView = ({ toggleDrawer }) => {
         setValue(newValue);
     }
 
+    // fetch handyman details on component load
+    useEffect(() => {
+        handleFetch(`user/details/handyman/${params.handymanId}`, {
+            method: 'GET'
+        })
+            .then(({ handymanName, handymanNo }) => {
+                setHandymanDetails({ handymanName, handymanNo })
+            })
+            .catch(error => console.log({handymanDetailsFetchError: error}));
+    },[])
+
     return (  
         <>
             <div className="top-content">
-                <Navbar toggleDrawer={toggleDrawer}/>
+                <Navbar />
                 <div className="wrapper">
                     
                     <div className="main-content">
-                        <Avatar className="avatar" />
-                        <h4 className="p1">Name goes here</h4>
-                        <h5 className="p2">Location goes here</h5>
-                        <h5 className="p2 p-overide">Phone number goes here</h5>
+                        <Avatar className='avatar'
+                            sx={{backgroundColor: randomColor()}}
+                        >
+                            {handymanDetails?.handymanName[0]?.toUpperCase()}
+                        </Avatar>
+                        <h4 className="p1">{ handymanDetails.handymanName }</h4>
+                        {/* <h5 className="p2">Location goes here</h5> */}
+                        <h5 className="p2 p-overide">{ handymanDetails.handymanNo }</h5>
                     </div>
                     <Tabs
                         value={value}

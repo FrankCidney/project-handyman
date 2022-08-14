@@ -20,16 +20,19 @@ import ClientRequests from './components/home/handyman/client-requests/ClientReq
 import RequireAuth from './components/core/RequireAuth/RequireAuth';
 import Layout from './components/core/layout/Layout';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Withdraw from './components/home/handyman/Withdraw';
+import NotFound from './components/pages/NotFound';
 
 function App() {
   const theme = createTheme({
     palette: {
       primary: {
         // Purple and green play nicely together.
-        main: '#dbb6da',
+        main: '#888888',
       }
     }
   })
+  // #785AA0
   return (
     <ThemeProvider theme={theme}>
     <div className="App">
@@ -48,8 +51,8 @@ function App() {
           <RequireAuth>
             <Layout>
               {
-                (toggleDrawer) => (
-                  <><Search toggleDrawer={toggleDrawer} /></>
+                () => (
+                  <><Search /></>
                 )
               }
             </Layout>
@@ -59,8 +62,8 @@ function App() {
           <RequireAuth>
             <Layout>
               {
-                (toggleDrawer) => (
-                  <><Categories toggleDrawer={toggleDrawer} /></>
+                () => (
+                  <><Categories /></>
                 )
               }
             </Layout>
@@ -70,17 +73,22 @@ function App() {
           <RequireAuth>
             <Layout>
               {
-                (toggleDrawer) => (
-                  <><ClientRequests toggleDrawer={toggleDrawer} /></>
+                () => (
+                  <><ClientRequests /></>
                 )
               }
             </Layout>
           </RequireAuth>
         } />
+        <Route path='/withdraw' element={
+          <RequireAuth>
+              <Withdraw />
+          </RequireAuth>
+        } />
 
       {/* profile routes */}
       {/* client profile */}
-        <Route path='/profile/client' element={
+        {/* <Route path='/profile/client' element={
           <RequireAuth>
             <ClientProfile />
           </RequireAuth>
@@ -88,14 +96,14 @@ function App() {
           <Route index element={<Details />} />
           <Route path='details' element={<Details />} />
           <Route path='notifications' element={<Notifications />} />
-        </Route>
+        </Route> */}
         {/* handyman client view */}
         <Route path='/profile/handyman-client-view/:handymanId' element={
           <RequireAuth>
             <Layout>
               {
-                (toggleDrawer) => (
-                  <><HandymanClientView toggleDrawer={toggleDrawer} /></>
+                () => (
+                  <><HandymanClientView /></>
                 )
               }
             </Layout>
@@ -106,9 +114,8 @@ function App() {
           <Route path='payment' element={<Payment />} />
           <Route path='rate' element={<Rate />} />
         </Route>
-        {/* other profile routes */}
-        {/* <Route path='/rating' element={<RatingComponent />} /> */}
-
+       {/* 404 route */}
+       <Route path='*' element={<NotFound />} />
       </Routes>
     </div>
     </ThemeProvider>
