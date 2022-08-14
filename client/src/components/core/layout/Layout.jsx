@@ -1,4 +1,3 @@
-import BottomNav from "../bottom-nav/BottomNav";
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import './layout.scss';
 import { useEffect, useState } from "react";
@@ -11,10 +10,7 @@ import { handleFetch } from "../../../helpers";
 import ActiveService from "./active-service/ActiveService";
 import { NavContext } from "../../../context/NavContext";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-// import Drawer from '@mui/material/Drawer';
-// import { width } from '@mui/system';
 import IconButton from '@mui/material/IconButton';
-// import HomeIcon from "@mui/icons-material/Home";
 
 const Layout = ({ children }) => {
     const navigate = useNavigate();
@@ -26,12 +22,9 @@ const Layout = ({ children }) => {
     const { drawerVal, toggleFunc, notificationFunc } = useContext(NavContext);
 
     // set state
-    // const [open, setOpen] = useState(false);
     const [socket, setSocket] = useState(null);
     const [noneActive, setNoneActive] = useState(false);
     const [activeServs, setActiveServs] = useState([]);
-    // const [locationState, setLocationState] = useState('');
-    // const [notifications, setNotifications] = useState([]);
 
     // function to fetch active services
     const fetchActiveServices = async () => {
@@ -224,38 +217,16 @@ const Layout = ({ children }) => {
                             </IconButton>
                         </div>
                         
-                        {/* <hr /> */}
                         { drawerContent }
                     </div>
                 </SwipeableDrawer>
-                {/* <Drawer
-                    anchor="left"
-                    variant="permanent"
-                    sx={{
-                        display: { xs: 'none', sm: 'block' }
-                    }}
-                    open
-                >
-                    { drawerContent }
-                </Drawer> */}
 
             </div>
-            {/* <div className="navbar top-content">
-                <Container>
-                    <Navbar />
-                </Container>
-            </div> */}
             <div className="content-holder">
-                {/* <Container> */}
-                {/* <div className="container"> */}
                     {
                         children()
                     }
-                {/* </div> */}
-                {/* </Container> */}
             </div>
-            
-            {/* <div className="bottom-nav"><BottomNav /></div> */}
         </div>
      );
 }

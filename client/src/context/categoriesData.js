@@ -2,37 +2,37 @@ const categoriesData = [
     {
         id: "1",
         label: "Electricity",
-        description: "Includes blah blah blah"
+        description: "Includes socket repair..."
     },
     {
         id: "2",
         label: "Plumbing",
-        description: "Includes blah blah blah"
+        description: "Includes faucet installation..."
     },
     {
         id: "3",
         label: "Painting",
-        description: "Includes blah blah blah"
+        description: "Includes full house repainting..."
     },
     {
         id: "4",
         label: "Tiling",
-        description: "Includes blah blah blah"
+        description: "Includes bathroom tiling..."
     },
     {
         id: "5",
         label: "DrywallInstallation",
-        description: "Includes blah blah blah"
+        description: "Includes building dry wall..."
     },
     {
         id: "6",
         label: "GutterRepair",
-        description: "Includes blah blah blah"
+        description: "Includes repair, cleaning..."
     },
     {
         id: "7",
         label: "Welding",
-        description: "Includes blah blah blah"
+        description: "Includes grill installation..."
     }
 ]
 

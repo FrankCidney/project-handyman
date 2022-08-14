@@ -11,7 +11,6 @@ const ActiveService = ({ activeServ, endActiveService }) => {
     // context values
     const { toggleFunc } = useContext(NavContext);
 
-    console.log(activeServ);
     // view handyman profile from active service
     const handleActiveServ = (e) => {
         navigate(`/profile/handyman-client-view/${activeServ.handymanId}`);
@@ -68,11 +67,7 @@ const ActiveService = ({ activeServ, endActiveService }) => {
                 <div className='request-content active-serv-cont'>
                     <p className='p-base p-top p-serv'>{activeServ.clientName}, {activeServ.clientPhone}</p>
                     <p className='p2 p-serv'>{activeServ.description}</p>
-                    {/* <div className="map-phone">
-                        <LocalPhoneIcon className='mp-icons mp-icons-first'/>
-                        <MapIcon className='mp-icons'/>
-                        
-                    </div> */}
+            
                     <div className='actions serv-actions'>
                         <button className="button2 btn-action">
                             <a href={`https://www.google.com/maps/dir/?api=1&origin=${activeServ.handymanLocation.coordinates[1]}%2C${activeServ.handymanLocation.coordinates[0]}&destination=${activeServ.clientLocation.coordinates[1]}%2C${activeServ.clientLocation.coordinates[0]}`}

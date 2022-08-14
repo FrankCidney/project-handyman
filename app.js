@@ -1,7 +1,7 @@
 const express = require('express');
 const http = require('http');
 const mongoose = require('mongoose');
-const cors = require('cors');
+// const cors = require('cors');
 require('dotenv').config();
 const { Server } = require('socket.io');
 const cookieParser = require('cookie-parser');
@@ -18,24 +18,18 @@ const path = require('path');
 // const axios = require('axios').default;
 // const { getAccessToken } = require('./mpesa/middleware/middleware');
 
-const frontEndUrl = process.env.FRONT_END_URL;
+// const frontEndUrl = process.env.FRONT_END_URL;
 // setting up server
 const app = express();
 const httpServer = http.createServer(app);
-// const io = new Server(httpServer);
-const io = new Server(httpServer, {cors: frontEndUrl, credentials: true});
+const io = new Server(httpServer);
+// const io = new Server(httpServer, {cors: frontEndUrl, credentials: true});
 
 // middleware
 app.use(express.json());
-app.use(cors({ origin: frontEndUrl, credentials: true }));
+// app.use(cors({ origin: frontEndUrl, credentials: true }));
 app.use(cookieParser());
 
-// socket middleware
-// io.use((socket, next) => {
-//     // verify auth token
-//     requireSocketAuth(socket);
-//     next()
-// })
 const setIo = (req, res, next) => {
     req.io = io;
     next();
