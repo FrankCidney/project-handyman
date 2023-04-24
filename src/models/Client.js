@@ -20,6 +20,7 @@ const geoSchema = new mongoose.Schema(
 // client schema
 const clientSchema = new mongoose.Schema(
     {
+        id: Number,
         username: {
             type: String,
             required: [true, 'username required'],
@@ -43,7 +44,7 @@ const clientSchema = new mongoose.Schema(
             required: [true, 'password required'],
             minlength: [7, 'minimum password length is 7 characters']
         },
-        activeService: [{}]
+        // activeService: [{}]
     }
 )
 

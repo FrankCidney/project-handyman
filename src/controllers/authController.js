@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 // note to check on preventing null array in db
 
 // create token
-const maxAge = 60 * 60 * 3
+const maxAge = 60 * 60 * 8
 const createToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET || 'development secret', {
         expiresIn: maxAge
@@ -59,11 +59,20 @@ const handleErrors = (err) => {
 // signup routes
 module.exports.signup_client_post = async (req, res) => {
     try {
-        const client = await Client.create(req.body);
+        const lastRecord = await Client.findOne().sort({_id: -1}).limit(1)
+        const newRecord = { ...req.body, id: lastRecord.id + 1 }
+
+        const client = await Client.create(newRecord);
 
         const token = createToken(client._id);
         res.cookie('token', token, { maxAge: maxAge * 1000, httpOnly: true });
-        res.status(201).json({user: client._id});
+        res.status(201).json({
+            user: client._id,
+            id: client.id,
+            username: client.username,
+            phoneNo: client.phoneNo,
+            defaultLocation: client.defaultLocation
+        });
     } catch (error) {
         const errors = handleErrors(error);
         res.status(400).json({ errors });
@@ -71,13 +80,23 @@ module.exports.signup_client_post = async (req, res) => {
 }
 module.exports.signup_handyman_post = async (req, res) => {
     try {
-        const handyman = await Handyman.create(req.body);
+        const lastRecord = await Handyman.findOne().sort({_id: -1}).limit(1)
+        const newRecord = { ...req.body, id: lastRecord.id + 1 }
+
+        const handyman = await Handyman.create(newRecord);
 
         const token = createToken(handyman._id);
         res.cookie('token', token, { maxAge: maxAge * 1000, httpOnly: true });
-        res.status(201).json({user: handyman._id});
+        res.status(201).json({
+            user: handyman._id,
+            id: handyman.id,
+            username: handyman.username,
+            phoneNo: handyman.phoneNo,
+            defaultLocation: handyman.defaultLocation
+        });
     } catch (error) {
         const errors = handleErrors(error);
+        console.log(error)
         res.status(400).json({ errors });
     }
 }
@@ -89,9 +108,16 @@ module.exports.signin_client_post = async (req, res) => {
         console.log(req.body);
         const client = await Client.login(email, password);
 
+        // console.log({ clientONe: client })
         const token = createToken(client._id);
         res.cookie('token', token, { maxAge: maxAge * 1000, httpOnly: true });
-        res.status(201).json({user: client._id});
+        res.status(201).json({
+            user: client._id,
+            id: client.id,
+            username: client.username,
+            phoneNo: client.phoneNo,
+            defaultLocation: client.defaultLocation
+        });
     } catch (error) {
         const errors = handleErrors(error);
         // console.log({ errors });
@@ -106,7 +132,13 @@ module.exports.signin_handyman_post = async (req, res) => {
 
         const token = createToken(handyman._id);
         res.cookie('token', token, { maxAge: maxAge * 1000, httpOnly: true });
-        res.status(201).json({user: handyman._id});
+        res.status(201).json({
+            user: handyman._id,
+            id: handyman.id,
+            username: handyman.username,
+            phoneNo: handyman.phoneNo,
+            defaultLocation: handyman.defaultLocation
+        });
     } catch (error) {
         // console.log(error);
 

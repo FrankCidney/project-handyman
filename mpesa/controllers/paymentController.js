@@ -49,15 +49,15 @@ module.exports.mpesa_express_request = (req, res) => {
         }
     }
 
-    // console.log('here here');
+    // console.log({ stkResponse: {
+    //     status,
+    //     statusText,
+    //     data
+    // }});
+    // console.log({ thisPayError: error.response });
     // make payment request to daraja api
     axios.post(process.env.DARAJA_API_STK_ENDPOINT, body, config)
         .then(({ status, statusText, data }) => {
-            console.log({ stkResponse: {
-                status,
-                statusText,
-                data
-            }});
             if (data.ResponseCode === '0') {
                 Payment.create({ 
                     clientId: id, 
@@ -73,7 +73,6 @@ module.exports.mpesa_express_request = (req, res) => {
             }
         })
         .catch(error => {
-            console.log({ thisPayError: error.response });
             res.status(400).json({code: 1, msg: 'error making payment'});
         });
  }

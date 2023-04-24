@@ -93,9 +93,9 @@ const Navbar = ({ toggleDrawer }) => {
             }
             {optionsOpen && 
                 <div className="options-content">
-                    {(location.pathname !== '/client-requests' && location.pathname !== '/withdraw') && 
+                    {(location.pathname !== '/client-requests' && location.pathname !== '/withdraw' && location.pathname !== '/job-listings') && 
                     <button className='p-base'
-                            onClick={e => navigate('/categories')}
+                            onClick={e => navigate('/search')}
                         >
                             Home
                     </button>
@@ -108,6 +108,13 @@ const Navbar = ({ toggleDrawer }) => {
                     </button>
                     }
                     {(location.pathname === '/withdraw') && 
+                    <button className='p-base'
+                            onClick={e => navigate('/client-requests')}
+                        >
+                            Home
+                    </button>
+                    }
+                    {(location.pathname === '/job-listings') && 
                     <button className='p-base'
                             onClick={e => navigate('/client-requests')}
                         >

@@ -1,14 +1,18 @@
 import Rating from '@mui/material/Rating';
-import { useState } from 'react';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import { useContext, useState } from 'react';
 import './rate.scss';
 import { handleFetch } from '../../../../../helpers';
 import { useOutletContext } from 'react-router-dom';
 import LockRating from '../../../../core/lock-rating/LockRating';
+import { UserContext } from '../../../../../context/UserContext';
 
 const Rate = () => {
 
     const { handymanId, ratingActive, deactivateRating } = useOutletContext();
     const [ratingVal, setRatingVal] = useState(0);
+    const [review, setReview] = useState('');
+    const { id } = useContext(UserContext);
     console.log(ratingVal);
 
     const handleClick = e => {
@@ -16,7 +20,9 @@ const Rate = () => {
             method: 'PUT',
             body: {
                 handymanId,
-                ratingVal
+                ratingVal,
+                review,
+                id
             }
         })
             .then(data => deactivateRating())
@@ -26,7 +32,7 @@ const Rate = () => {
         <LockRating ratingActive={ratingActive} >
             <div className='tab-content'>
                 <p className="rating-title p-base">
-                    How would you rate the service provided by handyman name
+                    How would you rate the service provided
                 </p>
                 <div>
                     <Rating 
@@ -38,13 +44,26 @@ const Rate = () => {
                         size='large'
                     />
                 </div>
+                <p>Leave a review</p>
+                <OutlinedInput
+                    id="outlined-multiline-static"
+                    fullWidth
+                    placeholder='leave a review'
+                    size='small'
+                    multiline
+                    rows={4}
+                    className='lower-input'
+                    name='jobTitle'
+                    value={review}
+                    onChange={e => setReview(e.target.value)}
+                />
                 <button className="button submit-rating"
                     onClick={handleClick}
                 >
                     Submit
                 </button>
                 <p className='p-rating p2'>
-                    Your rating will help handyman name connect with more clients
+                    Your rating will help the handyman connect with more clients
                 </p>
             </div>
         </LockRating>

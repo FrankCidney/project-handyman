@@ -7,7 +7,7 @@ let onlineUsers = [];
 
 module.exports.addUser = (userId, socketId) => {
     console.log('new user added')
-    console.log(onlineUsers)
+    // console.log(onlineUsers)
     if (!onlineUsers.some(user => userId === user.userId)) {
         onlineUsers.push({userId, socketId});
     }
@@ -25,7 +25,6 @@ module.exports.getUser = userId => {
 }
 
 module.exports.handleServiceRes = async (senderId, receiverId, requestDesc, requestId, type, receiverLocation, senderLocation, socket) => {
-    console.log('i got to handleServiceRes');
     const receiver = this.getUser(receiverId);
     const notification = await Notifications.create({ senderId, receiverId, description: requestDesc, type })
     if (type === 0) {
@@ -48,7 +47,6 @@ module.exports.handleServiceRes = async (senderId, receiverId, requestDesc, requ
             notificationId: notification._id,
             activeServiceId: activeService._id
         });
-        console.log('i emitted accepted');
     } else {
         // send request declined notification to client
         socket.to(receiver?.socketId).emit('getResponseNotification', { 
@@ -57,7 +55,6 @@ module.exports.handleServiceRes = async (senderId, receiverId, requestDesc, requ
             requestDesc,
             notificationId: notification._id
         });
-        console.log('i emitted declined');
     }
 
     // delete from requests

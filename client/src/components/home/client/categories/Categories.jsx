@@ -9,7 +9,12 @@ import { CategoriesContext } from "../../../../context/CategoriesContext";
 
 const Categories = () => {
     // context values
-    const { userId, authenticated } = useContext(UserContext);
+    const { userId, authenticated, id, username, phoneNo, defaultLocation } = useContext(UserContext);
+    console.log({
+        userStuff: {
+            userId, id, username, phoneNo, defaultLocation
+        }
+    })
     const categories = useContext(CategoriesContext);
 
     // set state

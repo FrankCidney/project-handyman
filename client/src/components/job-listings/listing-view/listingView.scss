@@ -1,0 +1,102 @@
+@use '../../../css/mixins';
+@use '../../../css/variables' as vars;
+
+.p-list {
+    color: black;
+}
+div.listing {
+    box-shadow: 0 2px 8px #888888;
+    border-radius: 10px;
+    display: flex;
+    // display: inline-block;
+    // margin: vars.$margin10 vars.$margin3;
+    margin-top: vars.$margin10;
+    margin-bottom: vars.$margin10;
+    // max-width: vars.$formMaxWidth;
+    background-color: vars.$colorFA;
+    overflow: hidden;
+    padding-right: 20px;
+
+    .listing-content {
+        width: 100%;
+        margin: vars.$margin3;
+        padding-right: 5px;
+        // overflow-wrap: normal;
+        
+        p {
+            text-align: start;
+            margin: 0;
+        }
+
+        div.listing-top {
+            @include mixins.flexSpaceBetween();
+        }
+
+        p.desc {
+            margin-top: vars.$margin3;
+            margin-bottom: vars.$margin3;
+        }
+        ul.skills {
+            list-style-type: none;
+            display: flex;
+            margin-bottom: vars.$margin3;
+            
+
+            li {
+                margin-right: 15px;
+                background-color: #888888;
+                // color: #ffffff;
+                padding: 5px;
+                border-radius: 50px;
+            }
+        }
+        ul.prices {
+            list-style-type: none;
+            display: flex;
+
+            li {
+                margin-left: 3px;
+                margin-right: 25px;
+            }
+        }
+
+        // bid page content
+
+        div.about-client {
+            // border: 1px solid #888888;
+            border-radius: 10px;
+            background-color: #888888;
+            padding: 5px 0 5px 2px;
+            margin-top: vars.$margin1;
+            margin-bottom: vars.$marginUnderTab;
+            
+            ul.c-deets {
+                list-style-type: none;
+                display: flex;
+    
+                li {
+                    // margin-left: 3px;
+                    margin-right: 25px;
+                }
+            }
+        }
+
+        p.bid-p {
+            margin-top: vars.$margin10;
+            margin-bottom: vars.$margin3;
+        }
+        
+        form.bid {
+            .upper-input {
+                margin-bottom: vars.$margin3;
+            }
+            .lower-input {
+                margin-bottom: vars.$marginUnderTab;
+            }
+        }
+    }
+}
+
+.v-bids {
+    margin-top: vars.$margin1;
+}

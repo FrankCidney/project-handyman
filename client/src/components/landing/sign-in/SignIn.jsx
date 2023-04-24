@@ -23,7 +23,7 @@ const SignIn = () => {
     let navigate = useNavigate();
     let location = useLocation();
 
-    console.log(location.pathname)
+    // console.log(location.pathname)
     const handleSubmit = e => {
         e.preventDefault();
         if ( location.pathname === '/signin/handyman' ) {
@@ -33,8 +33,15 @@ const SignIn = () => {
                 body: userDetails
             }).then((data) => {
                 if (data.user) {
-                    console.log('authenticated');
-                    addUser({ userId: data.user, authenticated: true });
+                    
+                    addUser({ 
+                        userId: data.user,
+                        id: data.id,
+                        username: data.username,
+                        phoneNo: data.phoneNo,
+                        defaultLocation: data.defaultLocation,
+                        authenticated: true 
+                    });
                     navigate('/client-requests');
                 }
                 if (data.errors) {
@@ -55,8 +62,15 @@ const SignIn = () => {
                 body: userDetails
             }).then((data) => {
                 if (data.user) {
-                    addUser({ userId: data.user, authenticated: true });
-                    navigate('/categories');
+                    addUser({ 
+                        userId: data.user,
+                        id: data.id,
+                        username: data.username,
+                        phoneNo: data.phoneNo,
+                        defaultLocation: data.defaultLocation,
+                        authenticated: true 
+                    });
+                    navigate('/search');
                 }
                 if (data.errors) {
                     console.log(data.errors);

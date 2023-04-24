@@ -1,47 +1,43 @@
 import './search.scss';
 // import Autocomplete from "@mui/material/Autocomplete";
-// import TextField from '@mui/material/TextField';
-// import Layout from '../../../core/layout/Layout';
+import TextField from '@mui/material/TextField';
 import HandymanList from '../handyman-list/HandymanList';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { getLocation, handleFetch } from '../../../../helpers';
 import { useNavigate, useParams } from 'react-router-dom';
 import Navbar from '../../../core/navbar/Navbar';
+import { UserContext } from '../../../../context/UserContext';
 
 const Search = () => {
 
-    let params = useParams();
+    // let params = useParams();
     const navigate = useNavigate();
     
     // set state values
     const [searchMethod, setSearchMethod] = useState('Home Location');
     const [coordinates, setCoordinates] = useState(null)
     const [handymen, setHandymen] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
+    const [defaultMsg, setDefaultMsg] = useState(true);
     const [defaultDisplay, setDefaultDisplay] = useState(null);
     const [noneFound, setNoneFound] = useState(null);
     const [distanceFilter, setDistanceFilter] = useState(null);
     const [ratingFilter, setRatingFilter] = useState(null);
     const [filteredHandymen, setFilteredHandymen] = useState(null);
+    const [searchQuery, setSearchQuery] = useState('');
+
+    // fetch default location from context
+    const { defaultLocation, id } = useContext(UserContext);
+    console.log(sessionStorage.getItem('handymanRes')? JSON.parse(sessionStorage.getItem('handymanRes')): 'this')
 
     // fetch home location when component loads
     useEffect( () => {
-        handleFetch('user/defaultlocation', {
-            method: 'GET'
-        }, navigate).then(res => {
-            console.log(res);
-            if (res.location?.noHomeLocation) {
-                setLoading(false);
-                setDefaultDisplay(res.noHomeLocation)
-            } 
-            if (res.lng) { 
-                console.log({ res });
-                // store default location coordinates in session storage
-                sessionStorage.setItem('defaultCoords', JSON.stringify(res));
-                // set coordinates to default location fetched from db
-                setCoordinates(res); 
-            }
-        })
+        if (!defaultLocation) {
+            setDefaultMsg(false);
+            setDefaultDisplay('You have not set a home location')
+        } else {
+            setCoordinates(defaultLocation.coordinates);
+        }
     }, []);
     console.log({ coords: coordinates })
 
@@ -49,36 +45,47 @@ const Search = () => {
     useEffect(() => {
         if (searchMethod === "Current-location") {
             getLocation()
-                .then(({ coords: { latitude, longitude }}) => setCoordinates({ lng: longitude, lat: latitude }))
+                .then(({ coords: { latitude, longitude }}) => setCoordinates([longitude, latitude]))
                 .catch( error => console.log(error));
         }
         if (searchMethod === "Home-location") {
-            const storedCoords = JSON.parse(sessionStorage.getItem('defaultCoords'));
-            setCoordinates(storedCoords);
+            setCoordinates(defaultLocation.coordinates);
         }
     }, [searchMethod])
 
     // fetch list of nearby handymen when coordinates are set
-    useEffect(() => {
-        if (coordinates) {
-            // console.log({ coordinates });
-            handleFetch(`search/${params.categoryId}?lng=${coordinates.lng}&lat=${coordinates.lat}`, {
-                method: 'GET'
-            }).then(nearbyHandymen => {
-                // check whether any nearby handymen were found
-                if (nearbyHandymen === "No nearby handymen") {
-                    setNoneFound(nearbyHandymen);
-                    setLoading(false);
-                    setHandymen(null);
-                } else {
-                    setHandymen(nearbyHandymen);
-                    setLoading(false);
-                    setNoneFound(null);
-                }
-            }).catch((error) => alert(error));
-        }
-    }, [coordinates]);
+    // useEffect(() => {
+    //     if (coordinates) {
+    //         // console.log({ coordinates });
+            
+    //     }
+    // }, [coordinates]);
+
+    // on submit search query
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setLoading(true);
+        setDefaultMsg(false);
+        // console.log(searchQuery)
+        handleFetch(`search/${searchQuery}?lng=${coordinates[0]}&lat=${coordinates[1]}&nCid=${id}`, {
+            method: 'GET'
+        }).then(nearbyHandymen => {
+            // console.log('it came back')
+            // check whether any nearby handymen were found
+            if (nearbyHandymen === "No nearby handymen") {
+                setNoneFound(nearbyHandymen);
+                setLoading(false);
+                setHandymen(null);
+            } else {
+                setHandymen(nearbyHandymen);
+                sessionStorage.setItem('handymanRes', JSON.stringify(nearbyHandymen));
+                setLoading(false);
+                setNoneFound(null);
+            }
+        }).catch((error) => alert(error));
+    }
     
+    // when the filters on the interface are applied
     // filter list of handymen by distance
     useEffect(() => {
         const filteredByDist = filteredHandymen? 
@@ -123,13 +130,24 @@ const Search = () => {
                         size='small'
                         className='input search-input'
                     /> */}
+                    <form onSubmit={handleSubmit} className='search-form'>
+                        <TextField placeholder="Search for service"
+                            variant="outlined"
+                            className="input alt-input in-alt"
+                            size="small"
+                            value={searchQuery}
+                            onChange={e => setSearchQuery(e.target.value)}
+                        />
+                        <button type='submit' className="button2 bt-cust">Search</button>
+                    </form>
+
                     <div className="semi-top">
                         <h2 className='filters h2'>Filters</h2>
                         <form className='filters'>
                             <select 
                                 name="distance" 
                                 id="distance" 
-                                className="select button distance p3"
+                                className="select button distance font-small"
                                 value={"Distance"}
                                 onChange={e => setDistanceFilter(e.target.value)}
                             >
@@ -141,7 +159,7 @@ const Search = () => {
                             <select 
                                 name="rating" 
                                 id="rating" 
-                                className="select button rating p3"
+                                className="select button rating font-small"
                                 value={"Rating"}
                                 onChange={e => setRatingFilter(e.target.value)}
                             >
@@ -152,13 +170,13 @@ const Search = () => {
                                 <option value="1.5">Above 1.5</option>
                             </select>
                         </form>
-                        <h1 className='main-title mt-small'>Handymen near you</h1>
+                        <h2 className='main-title mt-small'>Handymen near you</h2>
                         <form className="search-by">
                             <label htmlFor='search-by h2'>Search by</label>
                             <select 
                                 name="search-by" 
                                 id="search-by" 
-                                className="search-by select button p3"
+                                className="search-by select button font-small"
                                 value={searchMethod}
                                 onChange={(e) => setSearchMethod(e.target.value)}
                             >
@@ -173,10 +191,12 @@ const Search = () => {
                     <h1 className='main-title mt-large'>Handymen near you</h1>
                 </div>
                 <div className="container container-search">
-                    {loading && <div className="loading">Loading...</div> }
-                    {defaultDisplay && <div className="default-diplay">Search for handymen</div> }
+                    {loading && <div className="loading center">loading...</div> }
+                    {(defaultMsg) && <div className="loading center">Find qualified handymen near you</div> }
+                    {defaultDisplay && <div className="default-diplay center">Search for handymen</div> }
                     {noneFound && <div>No nearby handymen</div>}
                     {handymen && <HandymanList handymen={filteredHandymen? filteredHandymen : handymen} userCoords={coordinates} />}
+                    {/* {handymen && <div>Show this</div>} */}
                 </div>
             </div>
         </>

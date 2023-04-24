@@ -8,7 +8,7 @@
     // font-family: Helvetica, Arial, sans-serif;
     a {
         text-decoration: none;
-        color: black;
+        color: #efefef;
     }
 }
 body {
@@ -26,7 +26,7 @@ body {
 }
 .button {
     padding: 15px 0;
-    font-size: 0.875rem;
+    font-size: 1rem;
     width: 100%;
     max-width: 450px;
     position: relative;
@@ -38,9 +38,11 @@ body {
     
     // background: linear-gradient(45deg, vars.$colorButton1, vars.$colorButton2) padding-box,
     // linear-gradient(45deg, vars.$colorButton1, vars.$colorButton2) border-box;
-    background: linear-gradient(45deg, vars.$colorButton1, vars.$colorButton2) padding-box;
+    // background: linear-gradient(45deg, vars.$colorButton1, vars.$colorButton2) padding-box;
+    background-color: #131313;
+    color: #efefef;
     border: 1.8px solid transparent;
-    border-radius: 50px;
+    border-radius: 15px;
     // color: vars.$colorFA;
 
     &:hover {
@@ -61,7 +63,9 @@ body {
     //     linear-gradient(45deg, slateblue, coral) border-box;
     font-size: 0.875rem;
 
-    background: linear-gradient(45deg, vars.$colorButton1, vars.$colorButton2) padding-box;
+    // background: linear-gradient(45deg, vars.$colorButton1, vars.$colorButton2) padding-box;
+    background-color: #131313;
+    color: #efefef;
     border: 1.8px solid transparent;
     border-radius: 50px;
     // color: vars.$colorFA;
@@ -120,3 +124,12 @@ body {
     // border-radius: 15px 15px 15px 0;
     // max-width: 1200px;
 }
+
+.center {
+    text-align: center;
+    margin-top: 150px;
+}
+
+// .page-title {
+//     margin-bottom: vars.$margin3;
+// }

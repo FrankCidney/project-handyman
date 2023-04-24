@@ -8,6 +8,7 @@ import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import HomeRepairServiceIcon from '@mui/icons-material/HomeRepairService';
+import DescriptionIcon from '@mui/icons-material/Description';
 import { useEffect, useState, useContext } from 'react';
 import SetLocation from '../../modals/set-location/SetLocation';
 import { getLocation, handleFetch, validateInput } from '../../../helpers';
@@ -24,40 +25,24 @@ const SignUp = () => {
     const { addUser } = useContext(UserContext);
     const cats = useContext(CategoriesContext);
 
-    // state values
-    // const [invalidInput, setInavlidInput] = useState('');
-    // const [errors, setErrors] = useState({ 
-    //     username: '', email: '', phoneNo: '', password: '', categories: '' 
-    // });
     const [errors, setErrors] = useState(null);
     const [open, setOpen] = useState(false);
     // const [user, setUser] = useState('');
     const [invalid, setInvalid] = useState({
-        username: '', email: '', phoneNo: '', password: '', categories: '' 
+        username: '', email: '', phoneNo: '', password: '', skills: '' 
     });
     const [userDetails, setUserDetails] = useState({
+        id: '',
         username: '',
         email: '',
+        ...((location.pathname === '/signup/handyman') && {skills: []}),
+        description:'',
         phoneNo: '',
         password: '',
-        ...((location.pathname === '/signup/handyman') && {categories: []}),
         defaultLocation: {}
     });
     console.log({userDetails});
 
-    // input validation 
-    // const regexPatterns = {
-    //     username: /^\w+$/,
-    //     phoneNo: /^\d{10}$/,
-    //     password: /^[\w@-]{7,}$/
-    // }
-    // const validateInput = (regex, value) => {
-    //     if (regex.test(value)) {
-    //         setInvalid('');
-    //     } else {
-    //         setInvalid('invalid');
-    //     }
-    // }
     const handleInputChange = (e) => {
         // setEventTarget(e.target.attributes.name.value);
         setUserDetails({...userDetails, [e.target.attributes.name.value]: e.target.value});
@@ -69,17 +54,9 @@ const SignUp = () => {
             validateInput(e.target.attributes.name.value, e.target.value, setInvalid, setErrors, errors, invalid);
         }
         console.log(errors)
-        // console.log(invalid);
+
     }
 
-    // categories to display in category input
-    // const categories = [
-    //     { label: 'Electricity', id: "1"},
-    //     { label: 'Plumbing', id: "2"},
-    //     { label: 'Painting', id: "3"},
-    // ];
-    // setCoordinates({ lat: latitude, lng: longitude }
-    // setCoordinates({ error })
 
     // function to get location of user
     const handleLocationClick = (e) => {
@@ -94,14 +71,7 @@ const SignUp = () => {
     // on form submit function
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Object.keys(userDetails).forEach(key => {
-            
-        //     if (userDetails[key] === '') {
-        //         console.log(key);
-        //         setErrors({...errors, [key]: `${key} required`});
-        //         setInvalid({...invalid, [key]: `invalid-${key}`});
-        //     }
-        // });
+    
 
         if (errors.username.length || errors.password.length || errors.email.length || errors.phoneNo.length) {
             // console.log(errors.username.length);
@@ -116,22 +86,31 @@ const SignUp = () => {
     const setLocation = (e) => {
         if (userDetails.defaultLocation.coordinates) {
             console.log('here i am')
-            if (userDetails.categories) {
+            if (userDetails.skills) {
                 console.log("handle handyman fetch")
                 // send post request with handyman user details
                 handleFetch('user/signup/handyman', {
                     body: userDetails
                 }).then((data) => {
+                    console.log('response received')
 
                     if (data.user) {
-                        addUser({ userId: data.user, authenticated: true });
+                        addUser({ 
+                            userId: data.user,
+                            id: data.id,
+                            username: data.username,
+                            phoneNo: data.phoneNo,
+                            defaultLocation: data.defaultLocation,
+                            authenticated: true  
+                        });
                         // setUser(data.user);
                         navigate('/client-requests');
                     }
 
                     if (data.errors) {
                         setErrors(data.errors);
-                        alert(data.errors.username, data.errors.email);
+                        // alert(data.errors.username, data.errors.email);
+                        console.log(data.errors)
                     }
 
                 }).catch(error => console.log(error.message));
@@ -143,9 +122,16 @@ const SignUp = () => {
                 }).then((data) => {
 
                     if (data.user) {
-                        addUser({ userId: data.user, authenticated: true });
+                        addUser({
+                            userId: data.user,
+                            id: data.id,
+                            username: data.username,
+                            phoneNo: data.phoneNo,
+                            defaultLocation: data.defaultLocation,
+                            authenticated: true  
+                        });
                         // setUser(data.user);
-                        navigate('/categories');
+                        navigate('/search');
                     }
 
                     if (data.errors) {
@@ -169,7 +155,7 @@ const SignUp = () => {
     // to run when not now button on modal is clicked
     useEffect(() => {
         if (userDetails.defaultLocation.type) {
-            if (userDetails.categories) {
+            if (userDetails.skills) {
                 // send post request with handyman user details
                 // handleFetch('user/signup/handyman', {
                 //     body: userDetails
@@ -192,7 +178,7 @@ const SignUp = () => {
                 }).then((data) => {
                     if (data.user) {
                         addUser({ userId: data.user, authenticated: true });
-                        navigate('/categories');
+                        navigate('/search');
                     }
                     if (data.errors) {
                         console.log(data);
@@ -217,8 +203,15 @@ const SignUp = () => {
         <div className="sign-in-sign-up">
             <div className='form-div'>
                 <form onSubmit={handleSubmit}>
-                    {location.pathname === '/signup/client' && <h1 className='sign-up-custom'>Client Sign Up</h1>}
-                    {location.pathname === '/signup/handyman' && <h1 className='sign-up-custom'>Handyman Sign Up</h1>}
+                    {/* {location.pathname === '/signup/client' && <h1 className='sign-up-custom'>Client Sign Up</h1>}
+                    {location.pathname === '/signup/handyman' && <h1 className='sign-up-custom'>Handyman Sign Up</h1>} */}
+
+                    {location.pathname === '/signup/client' && <h1 className='p-less'>Sign Up <br /> 
+                    <span className='p-custom'>Sign up as client </span>
+                    </h1>}
+                    {location.pathname === '/signup/handyman' && <h1 className='p-less'>Sign Up <br /> 
+                    <span className='p-custom'>Sign up as handyman </span>
+                    </h1>}
 
                     <Input placeholder='Username' 
                         startAdornment={
@@ -266,14 +259,14 @@ const SignUp = () => {
                         onChange={handleInputChange}
                     />
                     <p className="error-msg">{errors?.password}</p>
-                    {userDetails.categories && 
+                    {userDetails.skills && 
                         <Autocomplete
                             disablePortal
-                            id='categories'
+                            id='skills'
                             options={cats}
                             renderInput={(params) => (
                                 <TextField {...params}
-                                    placeholder='Select one or more categories'
+                                    placeholder='Select one or more skills'
                                     variant='standard'
                                     InputProps={{
                                         ...params.InputProps,
@@ -290,21 +283,34 @@ const SignUp = () => {
                                 />
                             )}
                             multiple = {true}
-                            getOptionLabel={option => option.label}
-                            isOptionEqualToValue={(option, value) => option.id === value.id}
+                            getOptionLabel={option => option}
+                            isOptionEqualToValue={(option, value) => option === value}
                             limitTags={2}
                             forcePopupIcon={false}
                             autoHighlight={true}
                             autoComplete={true}
                             className='input'
-                            value={userDetails.categories}
-                            onChange={(e, category) => {
-                                setUserDetails({...userDetails, categories: category})
-                                console.log({target: e.target.value});
-                                console.log({category});
+                            value={userDetails.skills}
+                            onChange={(e, skill) => {
+                                setUserDetails({...userDetails, skills: skill})
+                                // console.log({target: e.target.value});
+                                // console.log({category});
                             }}
                         />
                     }
+                    {userDetails.skills &&
+                    <Input placeholder='Description' 
+                        startAdornment={
+                            <InputAdornment position='start'>
+                                <DescriptionIcon fontSize='small' />
+                            </InputAdornment>
+                        }
+                        className={`input input-custom ${invalid.password}`}
+                        name='description'
+                        value={userDetails.description}
+                        onChange={handleInputChange}
+                        multiline
+                    />}
                     <button type='submit' className='button'
                         // onClick={handleOpen}    
                     >

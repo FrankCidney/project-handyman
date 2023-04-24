@@ -35,6 +35,10 @@ div.nav-button {
 div.drawer-top {
     @include mixins.flexSpaceBetween();
 }
+.bottom-cont {
+    position: relative;
+    padding-bottom: 65px;
+}
 // .drawer {
 //     width: 500px;
 // }

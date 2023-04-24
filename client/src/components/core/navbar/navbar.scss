@@ -6,6 +6,7 @@ nav {
     // flex-direction: row;
     @include mixins.flexSpaceBetween();
     position: relative;
+    margin-bottom: vars.$margin10;
     // padding: 10px 0;
     // .avatar {
     //     // vertical-align: middle;
@@ -13,20 +14,20 @@ nav {
     //     width: 25px;
     // }
 
-    .round {
-        &::before {
-            content: '';
-            position: absolute;
-            background: linear-gradient(45deg, vars.$colorButton1, vars.$colorButton2);
-            border-radius: 40px;
-            width: 180px;
-            height: 100px;
-            top: -50px;
-            left: -50px;
-            z-index: -1;
-        }
+    // .round {
+    //     &::before {
+    //         content: '';
+    //         position: absolute;
+    //         background: linear-gradient(45deg, vars.$colorButton1, vars.$colorButton2);
+    //         border-radius: 40px;
+    //         width: 180px;
+    //         height: 100px;
+    //         top: -50px;
+    //         left: -50px;
+    //         z-index: -1;
+    //     }
         
-    }
+    // }
     h2 {
         line-height: 35px;
     }

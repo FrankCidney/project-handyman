@@ -2,6 +2,6 @@
 
 // phone number validator function
 module.exports.validatePhone = value => {
-    const phoneRegex = /^\d{10}$/;
+    const phoneRegex = /^\+254\d{9}$/;
     return phoneRegex.test(value);
 }

@@ -52,10 +52,10 @@ const SetLocation = ({ open, onClose, handleLocationClick, setLocation, notNow }
                     Use my current location</button>
                 {/*Dialog actions */}
                 <div className="modal-actions">
-                    <button className="button2 btn-action not-now"
+                    <button className="button2 btn-action not-now bt-c"
                         onClick={notNow}
                     >Not now</button>
-                    <button className="button2 btn-action"
+                    <button className="button2 btn-action bt-c"
                         onClick={setLocation}
                     >Set location</button>
                 </div>

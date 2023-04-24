@@ -22,11 +22,11 @@ const HandymanClientView = () => {
         coordinates: [userLng, userLat]
     }
     // console.log(userId);
-    // console.log(searchParams.get('userLng'));
-    // console.log(searchParams.get('userLat'));
+    console.log(searchParams.get('userLng'));
+    console.log(searchParams.get('userLat'));
 
     const [value, setValue] = useState(0);
-    const [ratingActive, setRatingActive] = useState(false);
+    const [ratingActive, setRatingActive] = useState(true);
     const [handymanDetails, setHandymanDetails] = useState({
         handymanName: '',
         handymanNo: ''
@@ -74,6 +74,11 @@ const HandymanClientView = () => {
                         <h4 className="p1">{ handymanDetails.handymanName }</h4>
                         {/* <h5 className="p2">Location goes here</h5> */}
                         <h5 className="p2 p-overide">{ handymanDetails.handymanNo }</h5>
+                        <button className="button2 btn-custom">
+                            <a href={`tel:${handymanDetails.handymanNo}`}>
+                                Call
+                            </a>
+                        </button>
                     </div>
                     <Tabs
                         value={value}

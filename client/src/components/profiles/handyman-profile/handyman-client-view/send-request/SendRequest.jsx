@@ -36,7 +36,7 @@ const Request = () => {
                     onChange={e => setReqMsg(e.target.value)}
                     className='input p-base'
                 />
-                <button type='submit' className="button">Send Request</button>
+                <button type='submit' className="button">Make offer</button>
             </form>
         </div>
      );

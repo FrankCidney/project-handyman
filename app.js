@@ -1,7 +1,7 @@
 const express = require('express');
 const http = require('http');
 const mongoose = require('mongoose');
-// const cors = require('cors');
+const cors = require('cors');
 require('dotenv').config();
 const { Server } = require('socket.io');
 const cookieParser = require('cookie-parser');
@@ -9,6 +9,8 @@ const authRoutes = require('./src/routes/authRoutes');
 const { requireAuth } = require('./src/middleware/authMiddleware');
 const Handyman = require('./src/models/Handyman');
 const userDetailsRoutes = require('./src/routes/userDetailsRoutes');
+const searchRoutes = require('./src/routes/searchRoutes');
+const jobRoutes = require('./src/routes/jobRoutes');
 const paymentRoutes = require('./mpesa/routes/paymentRoutes');
 const { socketFunc } = require('./notification/socketFunc');
 const { removeUser } = require('./notification/helpers');
@@ -18,16 +20,16 @@ const path = require('path');
 // const axios = require('axios').default;
 // const { getAccessToken } = require('./mpesa/middleware/middleware');
 
-// const frontEndUrl = process.env.FRONT_END_URL;
+const frontEndUrl = process.env.FRONT_END_URL;
 // setting up server
 const app = express();
 const httpServer = http.createServer(app);
-const io = new Server(httpServer);
-// const io = new Server(httpServer, {cors: frontEndUrl, credentials: true});
+// const io = new Server(httpServer);
+const io = new Server(httpServer, {cors: frontEndUrl, credentials: true});
 
 // middleware
 app.use(express.json());
-// app.use(cors({ origin: frontEndUrl, credentials: true }));
+app.use(cors({ origin: frontEndUrl, credentials: true }));
 app.use(cookieParser());
 
 const setIo = (req, res, next) => {
@@ -49,7 +51,7 @@ io.on('connection', (socket) => {
 
 // database connection
 const port = process.env.PORT || 3001;
-const dbURI=process.env.DB_URI;
+const dbURI=process.env.DB_URI_LOCAL;
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then((result) => httpServer.listen(port, () => console.log(`listening on port ${port}`)))
     .catch((err) => console.log(err));
@@ -58,39 +60,40 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 // user routes
 app.use('/user', authRoutes);
 app.use('/user', requireAuth, userDetailsRoutes);
-app.get('/search/:categoryId', requireAuth, (req, res) => {
-    Handyman.aggregate([
-        {
-            $geoNear: {
-                near: {
-                    type: 'Point',
-                    coordinates: [parseFloat(req.query.lng), parseFloat(req.query.lat)]
-                },
-                distanceField: 'dist.calculated',
-                maxDistance: 5000,
-                spherical: true
-            }
-        }
-    ]) 
-        .then((result) => { 
-            if (result.length === 0) {
-                res.json("No nearby handymen");
-            } else {
-                const filteredbyCategory = result.filter(handyman => {
-                    const isInCategory = handyman.categories.find(category => category.id === req.params.categoryId);
-                    return isInCategory;
-                });
-                if (filteredbyCategory.length === 0) {
-                    res.json("No nearby handymen");
-                } else {
-                    // make sure to send what is required
-                    
-                    res.status(200).json(filteredbyCategory);
-                }
-            }
-        })
-        .catch((error) => console.log(error));
-})
+app.use('/search', searchRoutes);
+app.use('/jobs', requireAuth, jobRoutes);
+// app.get('/search/:categoryId', requireAuth, (req, res) => {
+//     Handyman.aggregate([
+//         {
+//             $geoNear: {
+//                 near: {
+//                     type: 'Point',
+//                     coordinates: [parseFloat(req.query.lng), parseFloat(req.query.lat)]
+//                 },
+//                 distanceField: 'dist.calculated',
+//                 maxDistance: 5000,
+//                 spherical: true
+//             }
+//         }
+//     ]) 
+//         .then((result) => { 
+//             if (result.length === 0) {
+//                 res.json("No nearby handymen");
+//             } else {
+                
+//                 const filteredbyCategory = result.filter(handyman => {
+//                     const isInCategory = handyman.categories.find(category => category.id === req.params.categoryId);
+//                     return isInCategory;
+//                 });
+//                 if (filteredbyCategory.length === 0) {
+//                     res.json("No nearby handymen");
+//                 } else {
+//                     res.status(200).json(filteredbyCategory);
+//                 }
+//             }
+//         })
+//         .catch((error) => console.log(error));
+// })
 
 // mpesa routes
 app.use('/mpesa', setIo, paymentRoutes);
@@ -98,9 +101,9 @@ app.use('/mpesa', setIo, paymentRoutes);
 // notification routes
 app.use('/notifications', requireAuth, notificationRoutes);
 
-app.use(express.static(path.join(__dirname, "client", "build")));
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
-});
+// app.use(express.static(path.join(__dirname, "client", "build")));
+// app.get("*", (req, res) => {
+//     res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+// });
 
 // app.get('/testroute', (req, res) => res.send('test route worked'));

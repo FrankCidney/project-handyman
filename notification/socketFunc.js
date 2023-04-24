@@ -1,5 +1,7 @@
 const { addUser, removeUser, getUser, handleServiceRes } = require('./helpers');
 const Requests = require('./models/Requests');
+const Handyman = require('../src/models/Handyman');
+const ActiveService = require('../notification/models/ActiveService');
 // const Notifications = require('./models/Notifications');
 // const ActiveService = require('./models/ActiveService');
 // const Client = require('../src/models/Client');
@@ -18,6 +20,7 @@ const socketFunc = (socket) => {
     // handle service requests
     socket.on('sendServiceRequest', ({ senderId, receiverId, description, senderLocation }) => {
         let location = {lng: 0, lat: 0}
+        console.log('i am here')
 
         location.lng = senderLocation.coordinates[0];
         location.lat = senderLocation.coordinates[1];
@@ -34,50 +37,28 @@ const socketFunc = (socket) => {
                 });
             })
             .catch(error => console.log({requestCreateError: error}));
-        
-        
     });
     socket.on('sendResponseNotification', ({ senderId, receiverId, requestDesc, requestId, type, receiverLocation, senderLocation }) => {
         handleServiceRes(senderId, receiverId, requestDesc, requestId, type, receiverLocation, senderLocation, socket);
-        // const receiver = getUser(receiverId);
-        // Notifications.create({ senderId, receiverId, description: requestDesc, type })
-        //     .then(notification => {
-        //         if (type === 0) {
-        //             Client.findById(receiverId)
-        //                 .then(client => {
-        //                     client.activeService.append({
-        //                         handymanId: senderId,
-        //                         description: requestDesc
-        //                     });
-
-        //                 })
-        //             ActiveService.create({ 
-        //                 handymanId: senderId,
-        //                 clientId: receiverId, 
-        //                 description: requestDesc
-        //             }).then((activeService => {
-        //                 // send request accepted notification to client
-        //                 socket.to(receiver?.socketId).emit('getResponseNotification', { 
-        //                     senderId,
-        //                     type,
-        //                     requestDesc,
-        //                     notificationId: notification._id,
-        //                     activeServiceId: activeService._id
-        //                 });
-        //             })).catch(error => console.log({ activeServiceCreateError: error }));
-        //         } else {
-        //             // send request declined notification to client
-        //             socket.to(receiver?.socketId).emit('getResponseNotification', { 
-        //                 senderId,
-        //                 type,
-        //                 requestDesc,
-        //                 notificationId: notification._id
-        //             });
-        //         }
-                
-        //     })
-        //     .catch(error => console.log({ notificationCreateError: error }));
     });
+
+    // handle bid accept
+    socket.on('sendBidAccept', data => {
+        Handyman.findOne({ id: data.handymanNumId })
+            .then(handyman => {
+                ActiveService.create(
+                    { 
+                        handymanId: handyman._id,
+                        clientId: data.clientId, 
+                        description: data.bidDesc,
+                        clientLocation: data.clientLocation,
+                        handymanLocation: handyman.defaultLocation
+                    }).then(activeServ => console.log(activeServ))
+                    .catch(error => console.log({ activeServErrBid: error}))
+            })
+            .catch(error => console.log({handymanNumErr: error}))
+
+    })
 }
 
 module.exports = { socketFunc }

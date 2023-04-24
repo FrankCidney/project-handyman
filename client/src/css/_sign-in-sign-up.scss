@@ -12,18 +12,18 @@
         grid-row: 1 / 2;
         @include mixins.flexCenter();
 
-        &::before {
-            content: '';
-            position: absolute;
-            width: 2000px;
-            height: 220%;
-            border-radius: 50%;
-            background: linear-gradient(45deg, vars.$colorButton1, vars.$colorButton2);
-            top: -10%;
-            right: 50%;
-            transform: translateY(-50%);
-            z-index: -1;
-        }
+        // &::before {
+        //     content: '';
+        //     position: absolute;
+        //     width: 2000px;
+        //     height: 220%;
+        //     border-radius: 50%;
+        //     background: linear-gradient(45deg, vars.$colorButton1, vars.$colorButton2);
+        //     top: -10%;
+        //     right: 50%;
+        //     transform: translateY(-50%);
+        //     z-index: -1;
+        // }
 
         form {
             width: 80%;
