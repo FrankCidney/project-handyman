@@ -9,7 +9,7 @@ const HandymanList = ({ handymen, userCoords }) => {
     return ( 
         handymen.map(handyman => (
             <div key={handyman._id}>
-                <Link to={`/profile/handyman-client-view/${handyman._id}?userLng=${userCoords.lng}&userLat=${userCoords.lat}`} className='list-content'>
+                <Link to={`/profile/handyman-client-view/${handyman._id}?userLng=${userCoords[0]}&userLat=${userCoords[1]}`} className='list-content'>
                     <div className="avatar-div">
                         <Avatar className='avatar' 
                             sx={{backgroundColor: randomColor()}}
@@ -22,7 +22,7 @@ const HandymanList = ({ handymen, userCoords }) => {
                         {/* <div> */}
                             <Rating 
                                 name='half-rating'
-                                value={handyman.rating.ratingValue}
+                                value={handyman.rating.value}
                                 precision={0.5}
                                 className="stars"
                                 size='small'

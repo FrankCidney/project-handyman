@@ -11,6 +11,8 @@ import ActiveService from "./active-service/ActiveService";
 import { NavContext } from "../../../context/NavContext";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import IconButton from '@mui/material/IconButton';
+import BottomNav from '../bottom-nav/BottomNav';
+
 
 const Layout = ({ children }) => {
     const navigate = useNavigate();
@@ -96,7 +98,7 @@ const Layout = ({ children }) => {
                     } // end if 1
 
                     // if in client page
-                    if (location.pathname === '/categories') {
+                    if (location.pathname === '/search') {
                         try {
                     
                                 activeServices?.map(async (activeService) => {
@@ -227,6 +229,8 @@ const Layout = ({ children }) => {
                         children()
                     }
             </div>
+            <div className='bottom-cont'></div>
+            <BottomNav />
         </div>
      );
 }

@@ -36,7 +36,7 @@ const Landing = () => {
 
     return ( 
         <Container className="cont-background">
-            <div>
+            <div className="containing">
                 {/* <div className="logo-div">
                     <h2 className="logo landing-logo">
                         Hire Me

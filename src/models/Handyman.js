@@ -20,6 +20,7 @@ const geoSchema = new mongoose.Schema(
 // handyman schema
 const handymanSchema = mongoose.Schema(
     {
+        id: Number,
         username: {
             type: String,
             required: [true, 'username required'],
@@ -31,6 +32,8 @@ const handymanSchema = mongoose.Schema(
             unique: true,
             lowercase: true
         },
+        skills: [],
+        description: String,
         phoneNo: {
             type: String,
             required: [true, 'phone number required'],
@@ -42,13 +45,24 @@ const handymanSchema = mongoose.Schema(
             minlength: [7, 'minimum password length is 7 characters']
         },
         defaultLocation: geoSchema,
-        categories: {
-            type: [{}],
-            required: [true, 'category required']
-        },
+        // categories: {
+        //     type: [{}],
+        //     required: [true, 'category required']
+        // },
         rating: {
             ratingValue: { type: Number, default: 0},
             ratingCount: { type: Number, default: 0}
+        },
+        reviews: {
+            type: [{}],
+            default: [
+                {
+                    clientId: 0,
+                    rating: 0,
+                    review: ''
+                }
+            ]
+            
         }
     }
 )

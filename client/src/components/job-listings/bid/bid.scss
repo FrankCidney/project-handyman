@@ -1,0 +1,10 @@
+@use '../../../css/variables' as vars;
+
+// .page-title {
+//     margin: 10px 0;
+// }
+.bid {
+    // margin: vars.$margin10 vars.$margin3;
+    margin-left: vars.$margin3;
+    margin-right: vars.$margin3;
+}

@@ -18,8 +18,12 @@ const ClientRequests = () => {
 
     const navigate = useNavigate();
     // set socket values
-    const { userId } = useContext(UserContext);
-    // console.log({ userId, authenticated });
+    const { userId, authenticated, username, phoneNo, defaultLocation } = useContext(UserContext);
+    // console.log({
+    //     userStuff: {
+    //         userId, username, phoneNo, defaultLocation
+    //     }
+    // })
     const { socket } = useContext(SocketContext);
     
     // set state
@@ -123,7 +127,7 @@ const ClientRequests = () => {
                 <Navbar />
                 {/* <NavbarHandyman /> */}
                 <h1 className="page-title">
-                Requests
+                Offers
                 </h1>
                 
             </div>
@@ -132,7 +136,7 @@ const ClientRequests = () => {
                     {
                         noRequests? 
                             <Grid item xs={12} sm={6} md={3}>
-                                <div className="no-requests">You currently have no requests</div>
+                                <div className="no-requests center">You currently have no requests</div>
                             </Grid>
                         : requests.map((request, index) => (
                             <Grid item key={index} xs={12} sm={6} md={3}>

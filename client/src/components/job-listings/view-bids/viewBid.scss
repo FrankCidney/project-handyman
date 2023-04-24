@@ -1,0 +1,43 @@
+@use '../../../css/mixins';
+@use '../../../css/variables' as vars;
+
+div.view-bids {
+    div.bid-content {
+        // margin: vars.$margin3;
+        // margin-left: 10px;
+        // margin-right: 10px;
+
+        div.name-bid {
+            @include mixins.flexSpaceBetween();
+            p.price {
+                margin-right: vars.$margin3;
+            }
+        }
+
+        div.dist-phone {
+            display: flex;
+            margin-top: 5px;
+            a.phone {
+                margin-right: vars.$margin3;
+                padding: 0;
+            }
+            p.dist {
+                padding-top: 4px;
+            }
+        }
+
+        div.rev-rating {
+            display: flex;
+            p.num-reviews {
+                margin-left: vars.$margin3;
+            }
+        }
+
+        .b-custom {
+            width: 95%;
+            // margin-right: 4px;
+            margin-top: vars.$margin3;
+            margin-bottom: vars.$margin3;
+        }
+    }
+}

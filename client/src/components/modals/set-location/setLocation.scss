@@ -1,7 +1,9 @@
 @use '../../../css/mixins';
 @use '../../../css/fonts';
 // @use '../../../css/variables' as vars;
-
+.bt-c {
+    color: black;
+}
 .dialog {
     .dialog-title {
         @include mixins.flexSpaceBetween();

@@ -22,6 +22,13 @@ import Layout from './components/core/layout/Layout';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Withdraw from './components/home/handyman/Withdraw';
 import NotFound from './components/pages/NotFound';
+import ListingView from './components/job-listings/listing-view/ListingView';
+import Bid from './components/job-listings/bid/Bid';
+import Jobs from './components/job-listings/jobs/Jobs';
+import ViewBids from './components/job-listings/view-bids/ViewBids';
+import CreateListing from './components/job-listings/create-listing/CreateListing';
+import NewListing from './components/job-listings/new-listing/NewListing';
+import ViewBidsContainer from './components/job-listings/view-bids/ViewBidsContainer';
 
 function App() {
   const theme = createTheme({
@@ -47,7 +54,7 @@ function App() {
         </Route>
       
       {/* home routes */}
-        <Route path='/search/:categoryId' element={
+        <Route path='/search' element={
           <RequireAuth>
             <Layout>
               {
@@ -114,8 +121,83 @@ function App() {
           <Route path='payment' element={<Payment />} />
           <Route path='rate' element={<Rate />} />
         </Route>
+
+        {/* new routes */}
+        <Route path='view-listing' element={
+          <RequireAuth>
+            <Layout>
+              {
+                () => (
+                  <><ListingView /></>
+                )
+              }
+            </Layout>
+          </RequireAuth>
+        } />
+
+        <Route path='job-listings' element={
+          <RequireAuth>
+            <Layout>
+              {
+                () => (
+                  <><Jobs /></>
+                )
+              }
+            </Layout>
+          </RequireAuth>
+        } />
+
+        <Route path='bid/:jobId' element={
+          <RequireAuth>
+            <Layout>
+              {
+                () => (
+                  <><Bid /></>
+                )
+              }
+            </Layout>
+          </RequireAuth>
+        } />
+
+        <Route path='view-bids/:jobId' element={
+          <RequireAuth>
+            <Layout>
+              {
+                () => (
+                  <><ViewBidsContainer /></>
+                )
+              }
+            </Layout>
+          </RequireAuth>
+        } />
+
+        <Route path='create-listing' element={
+          <RequireAuth>
+            <Layout>
+              {
+                () => (
+                  <><CreateListing /></>
+                )
+              }
+            </Layout>
+          </RequireAuth>
+        } />
+
+        <Route path='new-listing' element={
+          <RequireAuth>
+            <Layout>
+              {
+                () => (
+                  <><NewListing /></>
+                )
+              }
+            </Layout>
+          </RequireAuth>
+        } />
+
        {/* 404 route */}
        <Route path='*' element={<NotFound />} />
+
       </Routes>
     </div>
     </ThemeProvider>

@@ -1,0 +1,10 @@
+@use '../../../css/variables' as vars;
+
+form.bid {
+    max-width: vars.$formMaxWidth;
+    margin: auto;
+    
+    .listing-btn {
+        margin-top: 40px;
+    }
+}

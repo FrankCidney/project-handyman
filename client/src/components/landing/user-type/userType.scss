@@ -1,19 +1,27 @@
 @use '../../../css/variables' as vars;
 div.user-type {
+    
     button {
         width: 100%;
         margin-top: 20px;
     }
-    &::before {
-        content: '';
-        position: absolute;
-        width: 2000px;
-        height: 220%;
-        border-radius: 50%;
-        background: linear-gradient(45deg, vars.$colorButton1, vars.$colorButton2);
-        top: -10%;
-        right: 50%;
-        transform: translateY(-50%);
-        z-index: -1;
-    }
+    // &::before {
+    //     content: '';
+    //     position: absolute;
+    //     width: 2000px;
+    //     height: 220%;
+    //     border-radius: 50%;
+    //     background: linear-gradient(45deg, vars.$colorButton1, vars.$colorButton2);
+    //     top: -10%;
+    //     right: 50%;
+    //     transform: translateY(-50%);
+    //     z-index: -1;
+    // }
 }
+// .my-class {
+//     background-image: url("path/to/image.jpg");
+//     background-size: cover;
+//     background-repeat: no-repeat;
+//     background-position: center center;
+//   }
+  

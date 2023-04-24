@@ -5,7 +5,14 @@ import UserReducer from './userReducer';
 export const UserContext = createContext();
 
 const userAuthStatus = localStorage.getItem('authStatus')? 
-JSON.parse(localStorage.getItem('authStatus')) : { userId: '', authenticated: false };
+JSON.parse(localStorage.getItem('authStatus')) : { 
+    userId: '', 
+    authenticated: false,
+    id: '',
+    username: '',
+    phoneNo: '',
+    defaultLocation: '' 
+};
 
 const initialState = userAuthStatus;
 

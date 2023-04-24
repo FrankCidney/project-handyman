@@ -18,20 +18,21 @@ module.exports.default_location_get = async (req, res) => {
 }
 
 module.exports.rating_put = async (req, res) => {
-    const { handymanId, ratingVal } = req.body;
-    console.log('i got here');
-    console.log({ ratingVal });
+    const { handymanId, ratingVal, review, id } = req.body;
 
     try {
     const handyman = await Handyman.findOne({ _id: handymanId });
-    
+    const reviewCont = { clientId: id, rating: ratingVal, review }
+
     // update rating value
     let ratingTotal = handyman.rating.ratingValue * handyman.rating.ratingCount;
-    console.log(handyman.rating);
+    // console.log(handyman.rating);
     handyman.rating.ratingCount += 1;
     handyman.rating.ratingValue = (ratingTotal + ratingVal) / handyman.rating.ratingCount;
 
-    console.log(handyman.rating);
+    handyman.reviews = [...handyman.reviews, reviewCont]
+
+    // console.log(handyman.rating);
     // save new rating value
         const updatedHandyman = await handyman.save();
         res.status(200).json({

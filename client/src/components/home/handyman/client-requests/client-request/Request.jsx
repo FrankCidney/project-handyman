@@ -44,16 +44,12 @@ const Request = ({ request, coordinates, deleteRequest }) => {
         deleteRequest(request.requestId);
     }
 
-    // view map function
-    const handleCall = () => {
-
-    }
-
     return ( 
         <div className="request">
             <div className="avatar-div">
                 <Avatar className='avatar'
-                    sx={{backgroundColor: randomColor()}}
+                    // sx={{backgroundColor: randomColor()}}
+                    sx={{backgroundColor: '#88888'}}
                 >
                     {request.clientName[0].toUpperCase()}
                 </Avatar>
@@ -64,7 +60,6 @@ const Request = ({ request, coordinates, deleteRequest }) => {
                 <div className="map-phone">
                     <a href={`tel:${request.clientPhone}`}
                         className="phone"
-                        onClick={handleCall}
                     >
                         <LocalPhoneIcon className='mp-icons mp-icons-first'/>
                     </a>

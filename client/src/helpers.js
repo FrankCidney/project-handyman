@@ -48,8 +48,8 @@ export const handleFetch = async (endpoint, options, navigate = doNothing) => {
 /* user input validation */
 // regex patterns to validate against
 export const regexPatterns = {
-    username: /^\w+$/,
-    phoneNo: /^\d{10}$/,
+    username: /^[\w ]+$/,
+    phoneNo: /^\+254\d{9}$/,
     email: /^([a-z\d\.-]+)@([a-z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/i,
     password: /^[^\s]{7,}$/
 }
@@ -69,11 +69,11 @@ export const validateInput = (regexKey, value, setInvalid, setErrors, errors, in
         // setInvalidInput('');
     } else {
         if (regexKey === 'username') {
-            setErrors({...errors, username: 'Username can only contain letters, numbers or _'});
+            setErrors({...errors, username: 'Username can only contain letters, numbers, spaces or _'});
         } else if (regexKey === 'email') {
             setErrors({...errors, email: 'Enter a valid email e.g., username@domain.com'});
         } else if (regexKey === 'phoneNo') {
-            setErrors({...errors, phoneNo: 'Phone number must be 10 digits long'});
+            setErrors({...errors, phoneNo: 'Phone number should have the following format: +254xxxxxxxxx'});
         } else if (regexKey === 'password') {
             setErrors({...errors, password: 'Minimum password length is 7 characters, without spaces'});
         }
